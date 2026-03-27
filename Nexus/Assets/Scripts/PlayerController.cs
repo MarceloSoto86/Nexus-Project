@@ -8,16 +8,22 @@ public class PlayerController : MonoBehaviour
     public int remainingJumps = 2;
     public int maxJumps = 2;
     private Rigidbody rb;
+    private Vector3 previousPos;
+    public Vector3 currentDirection;
     public static PlayerController player;
     public bool jumpPressed;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        previousPos = transform.position;
     }
 
     void Update()
     {
+        CalculateDirection();
+        Teleport();
+
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, rayLength); // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
 
         if (isGrounded && jumpPressed)
@@ -46,6 +52,30 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(movement.x * moveSpeed, rb.linearVelocity.y, movement.z * moveSpeed); 
     }
 
+    public void CalculateDirection()
+    {
+        // Calcula la dirección del movimiento horizontal comparando la posición actual con la posición anterior
+        Vector3 movement = transform.position - previousPos;
+
+        movement  = new Vector3(movement.x, 0f, movement.z); // Ignora el movimiento vertical para calcular la dirección horizontal
+        if (movement != Vector3.zero)
+        {
+            currentDirection = movement.normalized;
+        }
+        // Actualiza la posición anterior para la próxima comparación
+        previousPos = transform.position;
+    }
+
+    public void Teleport()
+    {
+        //  Verifica si se presiona la tecla de teletransporte (por ejemplo, la tecla "E")
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Dash");
+            transform.position += currentDirection * 5f; // Teletransporta al jugador en la dirección actual multiplicada por una distancia de teletransporte (ajusta el valor según sea necesario)
+            Debug.Log("Current Direction: " + currentDirection); // Imprime la dirección actual en la consola para verificar que se esté calculando correctamente
+        }
+    }
     public void Jump()
     { 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
