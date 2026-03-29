@@ -7,6 +7,7 @@ public class MovingPlatform : MonoBehaviour
     private Transform platMove;
     private Transform currentTarget;
     [SerializeField] private float speed = 4f;
+    
 
 
 

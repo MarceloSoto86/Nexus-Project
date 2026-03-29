@@ -17,12 +17,17 @@ public class LockPlayerToPlat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       PlayerLock();
+      
+    }
+
+    private void FixedUpdate()
+    {
+        PlayerLock();
         lastPlatformPosition = transform.position; // Actualiza la posición de la plataforma para el próximo cálculo
     }
 
     // Esta función bloquea el movimiento del jugador con la plataforma mientras esté en contacto con ella
- private void PlayerLock()
+    private void PlayerLock()
     {
         if (lockPlayer && player != null)
         {
@@ -34,24 +39,25 @@ public class LockPlayerToPlat : MonoBehaviour
     }
 
     // Estas funciones detectan cuando el jugador entra o sale de la plataforma para activar o desactivar el bloqueo
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        
-        if (!lockPlayer && collision.gameObject.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
-            lastPlatformPosition = transform.position; // Inicializa la posición de la plataforma cuando el jugador entra en contacto
-            offset = collision.transform.position - transform.position;
-            Debug.Log("Player en la plataforma");
-           // collision.transform.SetParent(transform.parent);
-            //collision.transform.localScale = Vector3.one;
-            player = collision.gameObject.GetComponent<Transform>();
-            lockPlayer = true;
+            Debug.Log("Player en contacto con la plataforma");
+       
+        if (!lockPlayer)
+            {
+                lastPlatformPosition = transform.position; // Inicializa la posición de la plataforma cuando el jugador entra en contacto
+        
+                player = other.transform;
+                lockPlayer = true;
+            }
         }
     }
     //Esta función se asegura de que el jugador deje de moverse con la plataforma cuando salga de ella
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (lockPlayer && collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             Debug.Log("Player salió de la plataforma");
            // collision.transform.SetParent(null);
