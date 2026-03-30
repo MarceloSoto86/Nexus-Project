@@ -7,22 +7,27 @@ public class PlayerController : MonoBehaviour
     public float rayLength = 1.1f;
     public int remainingJumps = 2;
     public int maxJumps = 2;
-    private Rigidbody rb;
-    private Vector3 previousPos;
+
     public Vector3 currentDirection;
     public static PlayerController player;
     public bool jumpPressed;
+
+    private Rigidbody rb;
+    private Vector3 previousPos;
+    private Vector3 checkpointPos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
+        checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
     }
 
     void Update()
     {
         CalculateDirection();
         Teleport();
+        //SetCheckpoint(checkpointPos); // Asegura que la posición del checkpoint se actualice constantemente, aunque en este caso no cambia a menos que se llame explícitamente a SetCheckpoint con una nueva posición
 
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, rayLength); // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
         // Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
@@ -84,5 +89,10 @@ public class PlayerController : MonoBehaviour
         // Aplica una fuerza hacia arriba para realizar el salto
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         jumpPressed = true; // Establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
+    }
+
+    public void SetCheckpoint(Vector3 checkpointPosition)
+    {
+        checkpointPos = checkpointPosition; // Actualiza la posición del checkpoint
     }
 }
