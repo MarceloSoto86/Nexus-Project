@@ -10,6 +10,7 @@ public class CheckpointController : MonoBehaviour
             if (playerController != null)
             {
                 playerController.SetCheckpoint(transform.position); // Establece la posición del checkpoint al jugador
+                Debug.Log("Checkpoint reached at: " + transform.position); // Imprime un mensaje de depuración con la posición del checkpoint alcanzado
             }
         }
     }

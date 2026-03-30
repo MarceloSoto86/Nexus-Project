@@ -18,11 +18,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        player = this; // Asigna la instancia actual del jugador a la variable estática para que pueda ser accedida desde otros scripts
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
         checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
     }
-
     void Update()
     {
         CalculateDirection();
@@ -90,9 +90,15 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         jumpPressed = true; // Establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
     }
-
     public void SetCheckpoint(Vector3 checkpointPosition)
     {
         checkpointPos = checkpointPosition; // Actualiza la posición del checkpoint
+    }
+    public void Respawn()
+    {
+        transform.position = checkpointPos; // Teletransporta al jugador a la posición del checkpoint
+        rb.linearVelocity = Vector3.zero; // Restablece la velocidad del jugador para evitar que se mantenga el impulso después de reaparecer
+        rb.angularVelocity = Vector3.zero; // Restablece la velocidad angular del jugador para evitar que gire después de reaparecer
+        remainingJumps = maxJumps; // Restablece los saltos disponibles al reaparecer
     }
 }
