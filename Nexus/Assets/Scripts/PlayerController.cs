@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 currentDirection;
     public static PlayerController player;
     public bool jumpPressed;
+    public Transform camTransform; // Referencia al transform de la cámara para orientar la plataforma hacia la cámara
 
     private Rigidbody rb;
     private Vector3 previousPos;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        camTransform = Camera.main.transform; // Obtiene la referencia al transform de la cámara principal
         player = this; // Asigna la instancia actual del jugador a la variable estática para que pueda ser accedida desde otros scripts
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
@@ -47,14 +49,29 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        // Obtiene la entrada del jugador para el movimiento horizontal y vertical
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
-        movement = movement.normalized;
+        // Calcula el movimiento en función de la entrada del jugador y la orientación de la cámara
+        //Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
+        // movement = movement.normalized;
+        Vector3 forwardCam = camTransform.forward.normalized; // Obtiene la dirección hacia adelante de la cámara
+        forwardCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
+        forwardCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
+        Vector3 rightCam = camTransform.right.normalized; // Obtiene la dirección hacia la derecha de la cámara
+        rightCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
+        rightCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
+        Vector3 desiredMove = forwardCam * verticalInput + rightCam * horizontalInput; // Calcula el movimiento deseado en función de la orientación de la cámara (en este caso, no se mueve)
+        if (desiredMove.magnitude > 1f)
+        {
+            desiredMove.Normalize(); // Normaliza el movimiento deseado para mantener una velocidad constante incluso cuando se mueve en diagonal
+        }
 
-        rb.linearVelocity = new Vector3(movement.x * moveSpeed, rb.linearVelocity.y, movement.z * moveSpeed);
-    } 
+        // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
+        rb.linearVelocity = new Vector3(desiredMove.x * moveSpeed, rb.linearVelocity.y, desiredMove.z * moveSpeed);
+
+} 
     public void CalculateDirection()
     {
         // Calcula la dirección del movimiento horizontal comparando la posición actual con la posición anterior

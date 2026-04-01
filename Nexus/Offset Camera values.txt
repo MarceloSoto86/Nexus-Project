@@ -1,0 +1,21 @@
+Offset Camera: X 3
+Y 12
+Z 8
+
+Transform:
+Position
+x 306
+y -110
+z -480
+
+Rotation
+x 60
+y -110
+
+
+----------------------
+NUEVOS VALORES
+
+SECCION 1
+Target Offset
+X = -5 Y = 5 Z = -10

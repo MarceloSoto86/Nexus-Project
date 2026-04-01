@@ -9,6 +9,7 @@ public class PlatformController : MonoBehaviour
     [SerializeField] private bool fallsDown = true; // Indica si la plataforma ya ha comenzado a caer
     public MeshRenderer meshRenderer; // Referencia al componente MeshRenderer para controlar la visibilidad de la plataforma
     public Collider platformCollider; // Referencia al componente Collider para controlar la colisión de la plataforma
+   
 
     private Rigidbody rb;
     private bool isActivated = false; // Indica si la plataforma ha sido activada por el jugador
@@ -16,6 +17,7 @@ public class PlatformController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
         meshRenderer = GetComponent<MeshRenderer>();
         platformCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
@@ -57,4 +59,5 @@ public class PlatformController : MonoBehaviour
         platformCollider.enabled = true; // Activa el collider para que el jugador pueda interactuar con la plataforma nuevamente
         isActivated = false; // Restablece el estado de activación para permitir que la plataforma se active nuevamente
     }
+  
 }
