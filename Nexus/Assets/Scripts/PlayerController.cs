@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float rayLength = 1.1f;
     public int remainingJumps = 2;
     public int maxJumps = 2;
+    public float rotationSpeed = 10f; // Velocidad de rotación para orientar al player hacia la dirección del movimiento
 
     public Vector3 currentDirection;
     public static PlayerController player;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 previousPos;
     private Vector3 checkpointPos;
+    private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
+    private float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
 
     private void Start()
     {
@@ -33,12 +36,12 @@ public class PlayerController : MonoBehaviour
 
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, rayLength); // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
         // Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
-        if (isGrounded && jumpPressed)
+        if (isGrounded && rb.linearVelocity.y <=0 && Time.time > nextGroundCheckTime)
         {
             jumpPressed = false; // Reinicia el estado de salto después de realizar un salto
             remainingJumps = maxJumps; // Restablece los saltos disponibles al aterrizar
         }
-        if (Input.GetKeyDown(KeyCode.Space) && (remainingJumps > 0 || isGrounded)) // Si el jugador está en el suelo y presiona la barra espaciadora, realiza un salto siempre que tenga saltos disponibles
+        if (Input.GetKeyDown(KeyCode.Space) && remainingJumps > 0) // Si el jugador está en el suelo y presiona la barra espaciadora, realiza un salto siempre que tenga saltos disponibles
         {
             if (remainingJumps > 0)
             {
@@ -71,7 +74,13 @@ public class PlayerController : MonoBehaviour
         // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
         rb.linearVelocity = new Vector3(desiredMove.x * moveSpeed, rb.linearVelocity.y, desiredMove.z * moveSpeed);
 
-} 
+        if(desiredMove != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(desiredMove); // Calcula la rotación objetivo para orientar al player hacia la dirección del movimiento
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime); // Suaviza la rotación del player hacia la rotación objetivo utilizando Slerp
+        }
+
+    } 
     public void CalculateDirection()
     {
         // Calcula la dirección del movimiento horizontal comparando la posición actual con la posición anterior
@@ -106,6 +115,7 @@ public class PlayerController : MonoBehaviour
         // Aplica una fuerza hacia arriba para realizar el salto
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         jumpPressed = true; // Establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
+        nextGroundCheckTime = Time.time + groundCheckDelay; // Establece el tiempo para el próximo chequeo de suelo después de realizar un salto
     }
     public void SetCheckpoint(Vector3 checkpointPosition)
     {

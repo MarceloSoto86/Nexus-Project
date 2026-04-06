@@ -29,17 +29,18 @@ public class LockPlayerToPlat : MonoBehaviour
     // Esta función bloquea el movimiento del jugador con la plataforma mientras esté en contacto con ella
     private void PlayerLock()
     {
-        if (lockPlayer && player != null)
-        {
+       
             Debug.Log("Player movido con la plataforma");
             Vector3 platformMovement = transform.position - lastPlatformPosition; // Calcula el movimiento de la plataforma desde el último frame
+        if (lockPlayer && player != null)
+        {
             player.position += platformMovement; // Mueve al jugador junto con la plataforma
             
         }
     }
 
     // Estas funciones detectan cuando el jugador entra o sale de la plataforma para activar o desactivar el bloqueo
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {

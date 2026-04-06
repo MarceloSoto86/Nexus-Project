@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7573569785986682216}
   - component: {fileID: 2578216620931804688}
   - component: {fileID: 7516309202945261129}
+  - component: {fileID: 3539090931416698752}
   m_Layer: 0
   m_Name: Moving Plat
   m_TagString: Untagged
@@ -207,6 +208,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockPlayerToPlat
   player: {fileID: 0}
+--- !u!65 &3539090931416698752
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4270856714523700724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.2, z: 1}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1 &8136783196778248153
 GameObject:
   m_ObjectHideFlags: 0
