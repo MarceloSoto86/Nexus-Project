@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3780952845957514384}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,9 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5089230737594561399}
   - component: {fileID: 4577322327170472258}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Flickering & Moving Vertical Platform - Small
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6596191619836004081}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

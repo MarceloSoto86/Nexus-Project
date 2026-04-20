@@ -4,10 +4,12 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
-    public float rayLength = 1.1f;
+    public float rayLength = 1.5f;
     public int remainingJumps = 2;
     public int maxJumps = 2;
     public float rotationSpeed = 10f; // Velocidad de rotación para orientar al player hacia la dirección del movimiento
+    public Vector3 raycastOrigin; // Origen del raycast para verificar si el jugador está en el suelo
+    public LayerMask groundLayer; // Capa que representa el suelo para el raycast
 
     public Vector3 currentDirection;
     public static PlayerController player;
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 previousPos;
     private Vector3 checkpointPos;
+    
     private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
     private float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
 
@@ -31,12 +34,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         CalculateDirection();
-        Teleport();
         //SetCheckpoint(checkpointPos); // Asegura que la posición del checkpoint se actualice constantemente, aunque en este caso no cambia a menos que se llame explícitamente a SetCheckpoint con una nueva posición
 
-        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, rayLength); // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
+        raycastOrigin = transform.position + (Vector3.up * 0.1f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con el suelo
+        bool isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer); // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
+        Debug.DrawRay(raycastOrigin, Vector3.down * rayLength, Color.green);
         // Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
-        if (isGrounded && rb.linearVelocity.y <=0 && Time.time > nextGroundCheckTime)
+        if (isGrounded && rb.linearVelocity.y <=0.1f && Time.time > nextGroundCheckTime)
         {
             jumpPressed = false; // Reinicia el estado de salto después de realizar un salto
             remainingJumps = maxJumps; // Restablece los saltos disponibles al aterrizar
@@ -49,16 +53,22 @@ public class PlayerController : MonoBehaviour
                 Jump();
             }
         }
+        if (isGrounded)
+        {
+            Debug.Log("Raycast tocando: " + groundLayer.value);
+        }
+        else
+        {
+            Debug.Log("Raycast al aire");
+        }
     }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         // Obtiene la entrada del jugador para el movimiento horizontal y vertical
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         // Calcula el movimiento en función de la entrada del jugador y la orientación de la cámara
-        //Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
-        // movement = movement.normalized;
         Vector3 forwardCam = camTransform.forward.normalized; // Obtiene la dirección hacia adelante de la cámara
         forwardCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
         forwardCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
@@ -94,17 +104,7 @@ public class PlayerController : MonoBehaviour
         // Actualiza la posición anterior para la próxima comparación
         previousPos = transform.position;
     }
-    // Teletransporta al jugador en la dirección actual cuando se presiona la tecla de teletransporte -DASH-
-    public void Teleport()
-    {
-        //  Verifica si se presiona la tecla de teletransporte (por ejemplo, la tecla "E")
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Dash");
-            transform.position += currentDirection * 5f; // Teletransporta al jugador en la dirección actual multiplicada por una distancia de teletransporte (ajusta el valor según sea necesario)
-            Debug.Log("Current Direction: " + currentDirection); // Imprime la dirección actual en la consola para verificar que se esté calculando correctamente
-        }
-    }
+    
     // Aplica una fuerza hacia arriba para realizar un salto y establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
     public void Jump()
     {

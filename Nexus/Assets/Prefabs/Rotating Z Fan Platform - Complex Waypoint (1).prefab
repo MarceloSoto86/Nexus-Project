@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 823480153596478375}
   - component: {fileID: 7876146220413292657}
   - component: {fileID: 7312136989656724522}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rotating Z Fan Platform - Complex Waypoint (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

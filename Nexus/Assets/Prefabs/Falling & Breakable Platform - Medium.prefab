@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 2409184548504254463}
   - component: {fileID: 6282597734252422412}
   - component: {fileID: 1214260014247374247}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Falling & Breakable Platform - Medium
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlatformController
   fallDelay: 0.5
   timeToDisappear: 2
+  reappearDelay: 3
   fallsDown: 1
+  meshRenderer: {fileID: 0}
+  platformCollider: {fileID: 0}
 --- !u!54 &6282597734252422412
 Rigidbody:
   m_ObjectHideFlags: 0

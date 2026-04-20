@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5610192702204631850}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint B2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5077701676261456087}
   - component: {fileID: 9083287526931940460}
   - component: {fileID: 1835497701569413655}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Moving Plat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,9 +190,9 @@ GameObject:
   - component: {fileID: 8358118847923587323}
   - component: {fileID: 3725313472884841749}
   - component: {fileID: 4016237982154781046}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Moving Breakable Platform Small - Horizontal Mov (3) 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 576792902930182561}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint A1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

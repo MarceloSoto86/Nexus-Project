@@ -18,9 +18,9 @@ GameObject:
   - component: {fileID: 3296222540299007981}
   - component: {fileID: 4283605630970456889}
   - component: {fileID: 6878147095532181366}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Teeter-Totter & Rotating Y - Big
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

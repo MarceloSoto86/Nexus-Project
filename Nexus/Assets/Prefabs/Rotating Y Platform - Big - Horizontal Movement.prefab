@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7479051841496925602}
   - component: {fileID: 2702342910428129931}
   - component: {fileID: 420885320554157877}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rotating Y Platform - Big - Horizontal Movement
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +81,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6170080671826298128}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint A1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 755596398662622486}
   - component: {fileID: 3826806808454474099}
   - component: {fileID: 3511606583820919225}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Moving Plat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1239170089487872210}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint B2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

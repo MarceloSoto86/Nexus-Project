@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 1375176181671062754}
   - component: {fileID: 8750566991818178105}
   - component: {fileID: 3847606917320276905}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rotating X Platform - Complex Waypoint
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 809964461432854071}
   - component: {fileID: 7677310696179059585}
   - component: {fileID: 812471888589373777}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Teeter-Totter Small
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

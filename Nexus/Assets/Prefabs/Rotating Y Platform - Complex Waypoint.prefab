@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1468839446992012334}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint A1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5431945301240132366}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Waypoint B2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,9 +73,9 @@ GameObject:
   - component: {fileID: 485115473328256990}
   - component: {fileID: 3658148657928689684}
   - component: {fileID: 5062290532675090746}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rotating Y Platform - Complex Waypoint
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 6628972616435750654}
   - component: {fileID: 4571472289397229725}
   - component: {fileID: 4285175291216459662}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Moving Plat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4b3e6b8085fe24fbbd62d8a33fbebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotatePlatform
-  rotationSpeed: 200
+  rotationSpeedV3: {x: 0, y: 0, z: 0}
 --- !u!114 &4285175291216459662
 MonoBehaviour:
   m_ObjectHideFlags: 0

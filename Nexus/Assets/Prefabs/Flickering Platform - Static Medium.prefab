@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4165954988884030571}
   - component: {fileID: 2797364160780739389}
   - component: {fileID: 3196262221300879298}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Flickering Platform - Static Medium
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
