@@ -1,0 +1,94 @@
+
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            @page { size: A4; margin: 20mm; }
+            body { font-family: 'Segoe UI', Arial, sans-serif; color: #2c3e50; line-height: 1.6; }
+            .header { background-color: #1a1a2e; color: #00ffcc; padding: 30px; text-align: center; border-bottom: 5px solid #00ffcc; }
+            h1 { margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+            h2 { color: #1a1a2e; border-left: 5px solid #00ffcc; padding-left: 10px; margin-top: 30px; border-bottom: 1px solid #eee; }
+            h3 { color: #16a085; margin-top: 20px; }
+            .status { font-weight: bold; padding: 2px 8px; border-radius: 4px; font-size: 0.9em; float: right; }
+            .done { background-color: #d4edda; color: #155724; }
+            .dev { background-color: #fff3cd; color: #856404; }
+            .todo { background-color: #f8d7da; color: #721c24; }
+            .date-header { background-color: #ecf0f1; padding: 10px; font-weight: bold; margin-top: 15px; border-radius: 4px; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+            th { background-color: #1a1a2e; color: white; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>NEXUS: Game Design Document</h1>
+            <p>Estado del Proyecto: Prototipado Avanzado (V1.2)</p>
+        </div>
+
+        <h2>1. Resumen de Progreso Actual</h2>
+        <div class="status done">COMPLETADO</div>
+        <h3>Mecánicas de Movimiento y Habilidades</h3>
+        <ul>
+            <li><strong>Detección de Suelo Pro:</strong> Implementación de Raycast dinámico con offset y LayerMask para evitar saltos infinitos.</li>
+            <li><strong>Fricción Lateral:</strong> Eliminación del efecto "velcro" mediante Physic Materials con fricción cero y combinación mínima.</li>
+            <li><strong>Sistema de Dash Modular:</strong> Separación de lógica en <code>PlayerDash.cs</code>. Implementación de Dash con detección de colisiones (Raycast) para evitar atravesar paredes.</li>
+            <li><strong>Gestión de Gravedad:</strong> Implementación de Corrutina para suspender la gravedad durante el Dash, mejorando el control aéreo.</li>
+        </ul>
+
+        <h2>2. Planificación de Trabajo (Roadmap Estimado)</h2>
+
+        <div class="date-header">DÍA 1: Pulido de Entorno, UI y Feedback</div>
+        <ul>
+            <li>Posicionamiento final de cámaras (Cinemachine) y triggers de zona.</li>
+            <li><strong>UI Core:</strong> Menú principal, menú de pausa y HUD (Indicador de Cooldown del Dash).</li>
+            <li><strong>Audio Básico:</strong> SFX para salto, dash y feedback de botones.</li>
+            <li><strong>Blockout Estructural:</strong> Definición del cilindro vertical (límite del nivel) y KillZone de ácido.</li>
+            <li>Definición del estilo de arte final.</li>
+        </ul>
+
+        <div class="date-header">DÍA 2: Narrativa y Secuenciación</div>
+        <ul>
+            <li>Desarrollo de la historia (Escape de la Torre).</li>
+            <li>Implementación del sistema de "Flashes" de memoria (Eventos por altura/checkpoint).</li>
+            <li>Creación de animaciones narrativas básicas.</li>
+        </ul>
+
+        <div class="date-header">DÍA 3: Arte y Diseño de Niveles Avanzado</div>
+        <ul>
+            <li>Bocetado del personaje principal y fondos ambientales.</li>
+            <li>Análisis e implementación de obstáculos/trampas adicionales.</li>
+            <li>Diseño de coleccionables y posibles Side Quests para ampliar el scope.</li>
+        </ul>
+
+        <h2>3. Especificaciones Técnicas Actualizadas</h2>
+        <table>
+            <tr>
+                <th>Componente</th>
+                <th>Estado</th>
+                <th>Detalle Técnico</th>
+            </tr>
+            <tr>
+                <td>PlayerController</td>
+                <td>Estable</td>
+                <td>Movimiento relativo a cámara, Salto Raycast.</td>
+            </tr>
+            <tr>
+                <td>PlayerDash</td>
+                <td>Estable</td>
+                <td>Corrutina, MovePosition, Cooldown dinámico.</td>
+            </tr>
+            <tr>
+                <td>DynamicKillZone</td>
+                <td>Estable</td>
+                <td>Suscripción a eventos de Checkpoint.</td>
+            </tr>
+            <tr>
+                <td>Cámaras</td>
+                <td>Pendiente</td>
+                <td>Configuración de transiciones finales.</td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    
