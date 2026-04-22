@@ -55,11 +55,11 @@ public class PlayerController : MonoBehaviour
         }
         if (isGrounded)
         {
-            Debug.Log("Raycast tocando: " + groundLayer.value);
+            //Debug.Log("Raycast tocando: " + groundLayer.value);
         }
         else
         {
-            Debug.Log("Raycast al aire");
+            //Debug.Log("Raycast al aire");
         }
     }
     void FixedUpdate()
