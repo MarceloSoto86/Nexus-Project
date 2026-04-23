@@ -1,0 +1,116 @@
+
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: #333;
+                line-height: 1.6;
+            }
+            .header {
+                background-color: #1b1b1b;
+                color: #00ff41; /* Verde Matrix/Retro */
+                padding: 40px;
+                text-align: center;
+                border-bottom: 5px solid #008f11;
+            }
+            h1 { margin: 0; font-size: 26pt; text-transform: uppercase; }
+            h2 { color: #2c3e50; border-bottom: 2px solid #00ff41; padding-bottom: 5px; margin-top: 30px; }
+            .status-badge {
+                display: inline-block;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 10pt;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .done { background-color: #27ae60; color: white; }
+            .current { background-color: #3498db; color: white; }
+            
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            
+            .highlight-box {
+                background-color: #f9f9f9;
+                border-left: 5px solid #00ff41;
+                padding: 15px;
+                margin: 15px 0;
+            }
+            .footer {
+                margin-top: 50px;
+                font-size: 9pt;
+                text-align: center;
+                color: #7f8c8d;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>NEXUS: GDD - Versión 1.4</h1>
+            <p>Registro de Desarrollo y Evolución Visual</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Resumen de Logros (Día 2)</h2>
+            <div class="status-badge done">Hitos Alcanzados</div>
+            <ul>
+                <li><strong>Arquitectura de Menús Avanzada:</strong> Implementado sistema de navegación por pestañas (Tabs) en Settings. Separación lógica entre Navegación y Contenido.</li>
+                <li><strong>Blockout ProBuilder:</strong> Construcción del cilindro vertical (torre de ascenso) con normales invertidas para visibilidad interna.</li>
+                <li><strong>Atmósfera Visual (Post-Processing):</strong> Configuración de Global Volume con Bloom (verde), Color Grading y Vignette. Estética "Cyber-Tóxica" establecida.</li>
+                <li><strong>Checkpoints y KillZone:</strong> Posicionamiento estratégico de puntos de guardado y validación de la zona mortal de ácido.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>2. Estado del Arte Visual</h2>
+            <div class="highlight-box">
+                <strong>Paleta de Colores:</strong> Negro (Fondo/Paredes), Gris Oscuro (Suelo), Verde HDR (Ácido/Emisivos).
+                <br><strong>Atmósfera:</strong> Contraste alto, brillo radiactivo y enfoque cinematográfico mediante ACES Tonemapping.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Roadmap Actualizado (Día 3)</h2>
+            <div class="status-badge current">Próxima Sesión</div>
+            <table>
+                <tr>
+                    <th>Prioridad</th>
+                    <th>Tarea</th>
+                    <th>Descripción</th>
+                </tr>
+                <tr>
+                    <td>ALTA</td>
+                    <td>Flashes de Memoria</td>
+                    <td>Sistema de triggers narrativos con efectos de UI (Alpha Blending).</td>
+                </tr>
+                <tr>
+                    <td>ALTA</td>
+                    <td>Fix: Plataformas Móviles</td>
+                    <td>Script de Reset de posición para plataformas frágiles/caidizas.</td>
+                </tr>
+                <tr>
+                    <td>MEDIA</td>
+                    <td>Atmósfera Sonora</td>
+                    <td>AudioSource global con loops ambientales (ácido, viento, zumbido).</td>
+                </tr>
+                <tr>
+                    <td>MEDIA</td>
+                    <td>Pulido de Prototipo</td>
+                    <td>Revisión final de colisiones en el cilindro de ProBuilder.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            Generado por Gemini para Marce - Dublin, Irlanda 2026. Proyecto: Nexus.
+        </div>
+    </body>
+    </html>
+    
