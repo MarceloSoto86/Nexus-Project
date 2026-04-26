@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -5,23 +6,25 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public float rayLength = 1.5f;
+    public float health = 100f;
     public int remainingJumps = 2;
     public int maxJumps = 2;
     public float rotationSpeed = 10f; // Velocidad de rotación para orientar al player hacia la dirección del movimiento
     public Vector3 raycastOrigin; // Origen del raycast para verificar si el jugador está en el suelo
-    public LayerMask groundLayer; // Capa que representa el suelo para el raycast
-
     public Vector3 currentDirection;
-    public static PlayerController player;
     public bool jumpPressed;
     public Transform camTransform; // Referencia al transform de la cámara para orientar la plataforma hacia la cámara
+    public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
+    public LayerMask groundLayer; // Capa que representa el suelo para el raycast
 
+    public static PlayerController player;
+    private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
+    private float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
     private Rigidbody rb;
     private Vector3 previousPos;
     private Vector3 checkpointPos;
-    
-    private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
-    private float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
+    private bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
+    private bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
 
     private void Start()
     {
@@ -76,18 +79,21 @@ public class PlayerController : MonoBehaviour
         rightCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
         rightCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
         Vector3 desiredMove = forwardCam * verticalInput + rightCam * horizontalInput; // Calcula el movimiento deseado en función de la orientación de la cámara (en este caso, no se mueve)
-        if (desiredMove.magnitude > 1f)
-        {
-            desiredMove.Normalize(); // Normaliza el movimiento deseado para mantener una velocidad constante incluso cuando se mueve en diagonal
-        }
+        if(!isStunned) // Solo permite el movimiento si el jugador no está aturdido por recibir daño
+        { 
+            if (desiredMove.magnitude > 1f)
+            {
+                desiredMove.Normalize(); // Normaliza el movimiento deseado para mantener una velocidad constante incluso cuando se mueve en diagonal
+            }
 
-        // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
-        rb.linearVelocity = new Vector3(desiredMove.x * moveSpeed, rb.linearVelocity.y, desiredMove.z * moveSpeed);
+            // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
+            rb.linearVelocity = new Vector3(desiredMove.x * moveSpeed, rb.linearVelocity.y, desiredMove.z * moveSpeed);
 
-        if(desiredMove != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(desiredMove); // Calcula la rotación objetivo para orientar al player hacia la dirección del movimiento
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime); // Suaviza la rotación del player hacia la rotación objetivo utilizando Slerp
+            if(desiredMove != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(desiredMove); // Calcula la rotación objetivo para orientar al player hacia la dirección del movimiento
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime); // Suaviza la rotación del player hacia la rotación objetivo utilizando Slerp
+            }
         }
 
     } 
@@ -95,7 +101,6 @@ public class PlayerController : MonoBehaviour
     {
         // Calcula la dirección del movimiento horizontal comparando la posición actual con la posición anterior
         Vector3 movement = transform.position - previousPos;
-
         movement  = new Vector3(movement.x, 0f, movement.z); // Ignora el movimiento vertical para calcular la dirección horizontal
         if (movement != Vector3.zero)
         {
@@ -104,7 +109,6 @@ public class PlayerController : MonoBehaviour
         // Actualiza la posición anterior para la próxima comparación
         previousPos = transform.position;
     }
-    
     // Aplica una fuerza hacia arriba para realizar un salto y establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
     public void Jump()
     {
@@ -127,5 +131,47 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector3.zero; // Restablece la velocidad del jugador para evitar que se mantenga el impulso después de reaparecer
         rb.angularVelocity = Vector3.zero; // Restablece la velocidad angular del jugador para evitar que gire después de reaparecer
         remainingJumps = maxJumps; // Restablece los saltos disponibles al reaparecer
+    }
+    public void TakeDamage(float damageAmount)
+    {
+        health -= damageAmount; // Resta el daño recibido a la salud del jugador
+        if (health <= 0f)
+        {
+            health = 0f; // Asegura que la salud no sea negativa
+            Respawn(); // Si la salud llega a cero o menos, el jugador reaparece en el checkpoint
+        }
+        else
+        {
+            if (!isFlashingDamage)
+            {
+                StartCoroutine(DamageFlash()); // Inicia la rutina de parpadeo de daño si el jugador recibe daño pero no muere
+            }
+        }
+    }
+    IEnumerator DamageFlash()
+    {
+        if (_playerRenderer != null)
+        {
+            isFlashingDamage = true; // Indica que el jugador está actualmente parpadeando por recibir daño
+            Color originalColor = _playerRenderer.material.color; // Guarda el color original del jugador
+            _playerRenderer.material.color = Color.red; // Cambia el color del jugador a rojo para indicar que ha recibido daño
+            yield return new WaitForSeconds(0.2f); // Espera un breve momento antes de restablecer el color
+            _playerRenderer.material.color = originalColor; // Restablece el color original del jugador después de recibir daño
+            isFlashingDamage = false; // Indica que el jugador ha terminado de parpadear por recibir daño
+        }
+    }
+    public void ApplyKnockback(Vector3 knockbackDirection, float knockbackForce)
+    {
+        StartCoroutine(StunPlayerRoutine(knockbackDirection, knockbackForce)); // Inicia la rutina de aturdimiento y aplicación de knockback
+       
+    }
+    IEnumerator StunPlayerRoutine(Vector3 knockbackDirection, float knockbackForce)
+    {
+        isStunned = true; // Indica que el jugador está actualmente aturdido por recibir daño
+        rb.linearVelocity = Vector3.zero; // Restablece la velocidad del jugador antes de aplicar el knockback para evitar que se mantenga el impulso actual
+        rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.2f); // Duración del aturdimiento (puede ser ajustada según tus necesidades)
+        isStunned = false; // Indica que el jugador ha terminado de estar aturdido y puede moverse nuevamente
     }
 }
