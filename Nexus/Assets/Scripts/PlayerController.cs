@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public Transform camTransform; // Referencia al transform de la cámara para orientar la plataforma hacia la cámara
     public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
     public LayerMask groundLayer; // Capa que representa el suelo para el raycast
+    public bool isDashing = false; // Indica si el jugador está actualmente realizando un dash para evitar que pueda moverse o realizar otras acciones durante el dash
 
     public static PlayerController player;
     private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
@@ -25,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 checkpointPos;
     private bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
     private bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
+    
+
+
 
     private void Start()
     {
@@ -33,6 +37,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
         checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
+        
     }
     void Update()
     {
@@ -79,7 +84,7 @@ public class PlayerController : MonoBehaviour
         rightCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
         rightCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
         Vector3 desiredMove = forwardCam * verticalInput + rightCam * horizontalInput; // Calcula el movimiento deseado en función de la orientación de la cámara (en este caso, no se mueve)
-        if(!isStunned) // Solo permite el movimiento si el jugador no está aturdido por recibir daño
+        if(!isStunned && !isDashing) // Solo permite el movimiento si el jugador no está aturdido por recibir daño
         { 
             if (desiredMove.magnitude > 1f)
             {

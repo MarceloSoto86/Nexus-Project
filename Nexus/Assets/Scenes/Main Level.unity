@@ -6589,7 +6589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4167155001752707321, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6479562332112171511, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
       propertyPath: m_Name
@@ -6641,6 +6641,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6479562332112171511, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1621848427}
+    - targetCorrespondingSourceObject: {fileID: 6479562332112171511, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1621848431}
   m_SourcePrefab: {fileID: 100100000, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
 --- !u!4 &1071401050 stripped
 Transform:
@@ -9739,11 +9742,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   useGravityDuringDash: 0
+  _ghostEffect: {fileID: 1621848431}
 --- !u!23 &1621848430 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1062303140901065180, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
   m_PrefabInstance: {fileID: 1066964744}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1621848431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621848415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da16bcddd8c1eb949bf0f1773e4ffc61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostEffect
+  ghostAppearTime: 0.5
+  ghostRate: 0.04
+  ghostPrefab: {fileID: 1392062386689488362, guid: af55e0357ba159142a8bb4df16f33ba1, type: 3}
 --- !u!1 &1631353507
 GameObject:
   m_ObjectHideFlags: 0
