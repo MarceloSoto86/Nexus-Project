@@ -9,12 +9,13 @@ public class Projectile : MonoBehaviour
 
     private EnemyData _enemyData;
     private float projectileSpeed;
-    //private PlayerController _playerController;
+    //public PlayerController _playerController;
 
 
 
     private void Start()
     {
+        
         // Destruir el proyectil después de su tiempo de vida
         Destroy(gameObject, lifetime);
     }
@@ -38,13 +39,14 @@ public class Projectile : MonoBehaviour
         }
             else if (other.CompareTag("Player"))
             {
-            PlayerController _player = other.GetComponent<PlayerController>(); // Obtener el componente PlayerController del objeto con el que colisionó
+            PlayerStatus _player = other.GetComponent<PlayerStatus>(); // Obtener el componente PlayerStatus del objeto con el que colisionó
+            PlayerController _playerController = other.GetComponent<PlayerController>(); // Obtener la referencia al PlayerController para aplicar el knockback al jugador
             if (_player != null)
                 {
                     _player.TakeDamage(_enemyData.damagePoints); // Aplicar daño al jugador establecido en EnemyData (ScriptableObject) mediante la función TakeDamage del PlayerController
                     Vector3 knockbackDirection = transform.forward; // Dirección del knockback (puede ser ajustada según tus necesidades)
                     float knockbackForce = _enemyData.knockbackForce;
-                    _player.ApplyKnockback(knockbackDirection, knockbackForce);
+                    _playerController.ApplyKnockback(knockbackDirection, knockbackForce);
                 }
                 if (impactEffect != null)
                 {

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public float rayLength = 1.5f;
-    public float health = 100f;
+    //public float health = 100f;
     public int remainingJumps = 2;
     public int maxJumps = 2;
     public float rotationSpeed = 10f; // Velocidad de rotación para orientar al player hacia la dirección del movimiento
@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
     public LayerMask groundLayer; // Capa que representa el suelo para el raycast
     public bool isDashing = false; // Indica si el jugador está actualmente realizando un dash para evitar que pueda moverse o realizar otras acciones durante el dash
+    public bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
 
     public static PlayerController player;
     private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
@@ -24,11 +25,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 previousPos;
     private Vector3 checkpointPos;
-    private bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
-    private bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
     
-
-
+    private bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
 
     private void Start()
     {
@@ -135,25 +133,11 @@ public class PlayerController : MonoBehaviour
         transform.position = checkpointPos; // Teletransporta al jugador a la posición del checkpoint
         rb.linearVelocity = Vector3.zero; // Restablece la velocidad del jugador para evitar que se mantenga el impulso después de reaparecer
         rb.angularVelocity = Vector3.zero; // Restablece la velocidad angular del jugador para evitar que gire después de reaparecer
+        rb.MovePosition(checkpointPos); // Asegura que el Rigidbody del jugador se mueva a la posición del checkpoint para evitar problemas de colisiones o física al reaparecer
         remainingJumps = maxJumps; // Restablece los saltos disponibles al reaparecer
     }
-    public void TakeDamage(float damageAmount)
-    {
-        health -= damageAmount; // Resta el daño recibido a la salud del jugador
-        if (health <= 0f)
-        {
-            health = 0f; // Asegura que la salud no sea negativa
-            Respawn(); // Si la salud llega a cero o menos, el jugador reaparece en el checkpoint
-        }
-        else
-        {
-            if (!isFlashingDamage)
-            {
-                StartCoroutine(DamageFlash()); // Inicia la rutina de parpadeo de daño si el jugador recibe daño pero no muere
-            }
-        }
-    }
-    IEnumerator DamageFlash()
+    
+    public IEnumerator DamageFlash()
     {
         if (_playerRenderer != null)
         {

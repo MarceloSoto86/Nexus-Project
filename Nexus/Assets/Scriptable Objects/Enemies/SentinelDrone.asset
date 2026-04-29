@@ -16,7 +16,7 @@ MonoBehaviour:
   enemySprite: {fileID: 0}
   enemyID: 0
   healthPoints: 20
-  damagePoints: 2
+  damagePoints: 5
   movementSpeed: 2
   attackRange: 20
   detectionRange: 20
