@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class PlayerStatus : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class PlayerStatus : MonoBehaviour
     public float _memoryDecreaseRate; // Tasa a la que la memoria disminuye
     public float currentHealth; // Valor actual de salud del jugador
     public float maxHealth = 100; // Valor máximo de salud del jugador 
+    
     public PlayerController _playerController; // Referencia al script PlayerController para acceder a su estado y funciones
-
+    
+    public static event Action OnMemoryStoreUnlocked; // Evento que se dispara cuando se desbloquea un nuevo slot de memoria
 
     private void Start()
     {
@@ -63,5 +66,22 @@ public class PlayerStatus : MonoBehaviour
         _currentMemory = _memoryPerSlot * _memorySlot; // Restablece la memoria del jugador al máximo permitido por los slots ocupados
     }
 
+    public void UnlockNextMemorySlot()
+    {
+        if (_memorySlot < 4) // Asegura que el número de slots de memoria no exceda un límite (por ejemplo, 4)
+        {
+            _memorySlot++; // Incrementa el número de slots de memoria ocupados
+
+            RestoreMemory(_memoryPerSlot); // Restaura la memoria del jugador al desbloquear un nuevo slot
+
+            OnMemoryStoreUnlocked?.Invoke(); // Dispara el evento de desbloqueo de slot de memoria para que otros scripts puedan reaccionar a este cambio
+            //_currentMemory = _memoryPerSlot * _memorySlot; // Actualiza la memoria actual al máximo permitido por los nuevos slots ocupados
+        }
+    }
+
+    public void RestoreMemory(float amount)
+    {
+        _currentMemory = Mathf.Min(_currentMemory + amount, _memoryPerSlot * _memorySlot); // Restaura la memoria del jugador sin exceder el máximo permitido por los slots ocupados
+    }
 
 }

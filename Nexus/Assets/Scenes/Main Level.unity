@@ -1677,6 +1677,7 @@ GameObject:
   - component: {fileID: 276844963}
   - component: {fileID: 276844962}
   - component: {fileID: 276844964}
+  - component: {fileID: 276844965}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -1758,15 +1759,29 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
-  m_ChildScaleWidth: 1
-  m_ChildScaleHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &276844965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276844960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 0
+  m_VerticalFit: 0
 --- !u!1 &330382214
 GameObject:
   m_ObjectHideFlags: 0
@@ -4411,6 +4426,7 @@ MonoBehaviour:
   readyColor: {r: 1, g: 1, b: 1, a: 1}
   cooldownColor: {r: 1, g: 0, b: 0, a: 1}
   timeToNextDash: 0
+  memorySliderValue: 0
   _healthIndicatorSlider: {fileID: 246050627}
   _memoryIndicatorSlider: {fileID: 841868310}
 --- !u!1 &614243697
@@ -10764,7 +10780,7 @@ MonoBehaviour:
   _currentSlot: 0
   _memoryPerSlot: 25
   _currentMemory: 0
-  _memoryDecreaseRate: 0.01
+  _memoryDecreaseRate: 0.02
   currentHealth: 0
   maxHealth: 100
   _playerController: {fileID: 1621848423}
@@ -12077,6 +12093,7 @@ MonoBehaviour:
   readyColor: {r: 1, g: 1, b: 1, a: 1}
   cooldownColor: {r: 1, g: 0, b: 0, a: 1}
   timeToNextDash: 0
+  memorySliderValue: 0
   _healthIndicatorSlider: {fileID: 0}
   _memoryIndicatorSlider: {fileID: 0}
 --- !u!114 &1936667983
