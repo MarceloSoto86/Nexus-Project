@@ -10,6 +10,9 @@ public class HUDIcons : MonoBehaviour
     public float memorySliderValue; // Valor del slider de memoria que se actualizará en función de la memoria actual del jugador para mostrar al jugador su estado de memoria actual de manera visual a través del slider
     public Slider _healthIndicatorSlider; // Referencia al slider de salud en el HUD para mostrar la salud actual del jugador
     public Slider _memoryIndicatorSlider; // Referencia al slider de memoria en el HUD para mostrar la memoria actual del jugador
+    
+
+
     private PlayerDash playerDash; // Referencia al script PlayerDash para acceder a su estado de enfriamiento del dash
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private PlayerStatus _playerStatus; // Referencia al script PlayerStatus para acceder a su estado de salud y memoria del jugador
