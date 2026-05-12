@@ -39,8 +39,8 @@ public class Projectile : MonoBehaviour
         }
             else if (other.CompareTag("Player"))
             {
-            PlayerStatus _player = other.GetComponent<PlayerStatus>(); // Obtener el componente PlayerStatus del objeto con el que colisionó
-            PlayerController _playerController = other.GetComponent<PlayerController>(); // Obtener la referencia al PlayerController para aplicar el knockback al jugador
+            PlayerStatus _player = other.GetComponentInParent<PlayerStatus>(); // Obtener el componente PlayerStatus del objeto con el que colisionó
+            PlayerController _playerController = other.GetComponentInParent<PlayerController>(); // Obtener la referencia al PlayerController para aplicar el knockback al jugador
             if (_player != null)
                 {
                     _player.TakeDamage(_enemyData.damagePoints); // Aplicar daño al jugador establecido en EnemyData (ScriptableObject) mediante la función TakeDamage del PlayerController

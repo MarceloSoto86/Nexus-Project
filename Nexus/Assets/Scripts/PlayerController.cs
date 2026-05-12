@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 currentDirection;
     public bool jumpPressed;
     public Transform camTransform; // Referencia al transform de la cámara para orientar la plataforma hacia la cámara
-    public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
+    public GameObject visualRoot; // Referencia al objeto raíz de la parte visual del jugador para rotarlo hacia la cámara sin afectar la física del jugador
+    //public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
     public LayerMask groundLayer; // Capa que representa el suelo para el raycast
     public bool isDashing = false; // Indica si el jugador está actualmente realizando un dash para evitar que pueda moverse o realizar otras acciones durante el dash
     public bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
@@ -43,13 +44,17 @@ public class PlayerController : MonoBehaviour
         //SetCheckpoint(checkpointPos); // Asegura que la posición del checkpoint se actualice constantemente, aunque en este caso no cambia a menos que se llame explícitamente a SetCheckpoint con una nueva posición
 
         raycastOrigin = transform.position + (Vector3.up * 0.1f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con el suelo
-        bool isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer); // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
+        bool isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer, QueryTriggerInteraction.Ignore); ; // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
         Debug.DrawRay(raycastOrigin, Vector3.down * rayLength, Color.green);
         // Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
-        if (isGrounded && rb.linearVelocity.y <=0.1f && Time.time > nextGroundCheckTime)
+        if (isGrounded && Time.time > nextGroundCheckTime)
         {
-            jumpPressed = false; // Reinicia el estado de salto después de realizar un salto
-            remainingJumps = maxJumps; // Restablece los saltos disponibles al aterrizar
+            if(rb.linearVelocity.y <= 0.1f)
+            { 
+                
+                remainingJumps = maxJumps; // Restablece los saltos disponibles al aterrizar
+                jumpPressed = false; // Reinicia el estado de salto después de realizar un salto
+            }
         }
         if (Input.GetKeyDown(KeyCode.Space) && remainingJumps > 0) // Si el jugador está en el suelo y presiona la barra espaciadora, realiza un salto siempre que tenga saltos disponibles
         {
@@ -139,7 +144,7 @@ public class PlayerController : MonoBehaviour
     
     public IEnumerator DamageFlash()
     {
-        if (_playerRenderer != null)
+        /*if (_playerRenderer != null)
         {
             isFlashingDamage = true; // Indica que el jugador está actualmente parpadeando por recibir daño
             Color originalColor = _playerRenderer.material.color; // Guarda el color original del jugador
@@ -147,6 +152,26 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.2f); // Espera un breve momento antes de restablecer el color
             _playerRenderer.material.color = originalColor; // Restablece el color original del jugador después de recibir daño
             isFlashingDamage = false; // Indica que el jugador ha terminado de parpadear por recibir daño
+        }*/
+        if (visualRoot != null)
+        {
+            isFlashingDamage = true; // Indica que el jugador está actualmente parpadeando por recibir daño
+            Renderer[] renderers = visualRoot.GetComponentsInChildren<Renderer>(); // Obtiene todos los componentes Renderer en el objeto visual del jugador
+            // Usamos MaterialPropertyBlock para un mejor rendimiento en Unity 6
+        foreach (var r in renderers)
+            {
+                // En URP el nombre técnico es _BaseColor
+                r.material.SetColor("_BaseColor", Color.red);
+            }
+
+            yield return new WaitForSeconds(0.2f);
+
+            foreach (var r in renderers)
+            {
+                // Aquí puedes intentar resetearlo o guardar el color original antes
+                r.material.SetColor("_BaseColor", Color.white);
+            }
+            isFlashingDamage = false;
         }
     }
     public void ApplyKnockback(Vector3 knockbackDirection, float knockbackForce)

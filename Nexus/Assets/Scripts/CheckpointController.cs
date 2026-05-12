@@ -13,7 +13,8 @@ public class CheckpointController : MonoBehaviour
                 isSecurityActive = true; // Activa el sistema de seguridad para evitar que se active nuevamente
                 Debug.Log("Security system activated at checkpoint: " + transform.position); // Imprime un mensaje de depuración indicando que el sistema de seguridad ha sido activado
             }
-            PlayerController playerController = other.GetComponent<PlayerController>();
+            PlayerController playerController = other.GetComponentInParent<PlayerController>();
+            //PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
             {
                 playerController.SetCheckpoint(transform.position); // Establece la posición del checkpoint al jugador
@@ -21,7 +22,7 @@ public class CheckpointController : MonoBehaviour
             }
 
             //Buscamos el componente Player Events para activar el evento de checkpoint alcanzado
-            var playerEvents = other.GetComponent<PlayerEvents>();
+            var playerEvents = other.GetComponentInParent<PlayerEvents>();
             if(playerEvents != null)
             {
                 playerEvents.TriggerCheckpoint(transform.position.y); // Dispara el evento de checkpoint alcanzado con la altura del checkpoint

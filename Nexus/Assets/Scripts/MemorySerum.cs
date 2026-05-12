@@ -11,7 +11,7 @@ public class MemorySerum : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
+            PlayerStatus playerStatus = other.GetComponentInParent<PlayerStatus>();
             if (playerStatus != null)
             {
                 if (restoreMemoryAmount > 0)
