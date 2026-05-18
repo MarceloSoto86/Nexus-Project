@@ -14,18 +14,18 @@ public class PlayerDash : MonoBehaviour
     public bool useGravityDuringDash = false; // Opción para determinar si el jugador debe ser afectado por la gravedad durante el dash, lo que puede afectar la sensación de movimiento y control durante el dash
 
     private Rigidbody rb; // Referencia al Rigidbody del jugador
-    public GhostEffect _ghostEffect; // Referencia al componente GhostEffect para generar el efecto fantasma al ejecutar el dash
+   // public GhostEffect _ghostEffect; // Referencia al componente GhostEffect para generar el efecto fantasma al ejecutar el dash
 
 
 
-    private void Start()
+   /* private void Start()
     {
         rb = GetComponent<Rigidbody>(); // Obtiene la referencia al Rigidbody del jugador para poder manipular su posición y movimiento durante el dash
         _ghostEffect = GetComponent<GhostEffect>(); // Obtiene la referencia al componente GhostEffect para poder activar el efecto de estela fantasma durante el dash, lo que puede mejorar la sensación de velocidad y dinamismo durante el dash
-    }
+    }*/
 
     // Update is called once per frame
-    public void Update()
+    /*public void Update()
     {
         if (playerController != null)
         {
@@ -39,9 +39,9 @@ public class PlayerDash : MonoBehaviour
 
             nextDashTime = Time.time + dashCooldown; // Actualiza el tiempo para el próximo dash disponible sumando el tiempo actual con el tiempo de enfriamiento para evitar que el jugador pueda realizar dashes consecutivos sin pausa
         }
-    }
+    }*/
 
-    IEnumerator DashRoutine()
+    /*IEnumerator DashRoutine()
     {
         playerController.isDashing = true; // Establece la variable isDashing en el PlayerController a true para indicar que el jugador está actualmente realizando un dash, lo que puede ser utilizado para controlar otras mecánicas o animaciones relacionadas con el dash
         rb.useGravity = false; // Desactiva la gravedad durante el dash para que el jugador no caiga mientras se teletransporta
@@ -82,5 +82,5 @@ public class PlayerDash : MonoBehaviour
         rb.MovePosition(transform.position); // Asegura que el jugador esté en la posición correcta después del dash para evitar problemas de colisión o desincronización de la posición después de teletransportarse
         _ghostEffect.StopTrail(); // Detiene el efecto fantasma después de que el dash haya terminado para limpiar la estela visual y evitar que el efecto continúe indefinidamente, lo que puede mejorar la sensación de control y fluidez en el movimiento después del dash
         playerController.isDashing = false; // Establece la variable isDashing en el PlayerController a false para indicar que el jugador ha terminado de realizar el dash
-    }
+    }*/
 }

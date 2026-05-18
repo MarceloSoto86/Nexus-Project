@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1773383840895227305}
   - component: {fileID: 3993378955062050302}
   - component: {fileID: 1081301031999690459}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GhostPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3606186042959593857}
   - component: {fileID: 5006262644610190023}
   - component: {fileID: 4021949352886686418}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GhostEyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

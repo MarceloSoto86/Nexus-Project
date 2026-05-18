@@ -10,6 +10,6 @@ public class AnchorToParent : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
         // Si notas que el modelo también rota solo, podés forzar la rotación:
-        // transform.localRotation = Quaternion.identity;
+       // transform.localRotation = Quaternion.identity;
     }
 }

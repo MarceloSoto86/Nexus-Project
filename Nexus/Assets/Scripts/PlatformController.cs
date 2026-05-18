@@ -15,7 +15,7 @@ public class PlatformController : MonoBehaviour
     private Vector3 initialPosition; // Almacena la posición inicial de la plataforma para restablecerla después de reaparecer
     private Quaternion initialRotation; // Almacena la rotación inicial de la plataforma para restablecerla después de reaparecer
     private bool isActivated = false; // Indica si la plataforma ha sido activada por el jugador
-   
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,8 +26,8 @@ public class PlatformController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Hace que la plataforma sea cinemática para que no se vea afectada por la física
         rb.constraints = RigidbodyConstraints.FreezeRotation; // Congela la rotación para evitar que la plataforma gire al caer
-       // rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX; // Congela el movimiento en los ejes X y Z para que la plataforma solo se mueva verticalmente
-       mp = GetComponent<MovingPlatform>();
+        // rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX; // Congela el movimiento en los ejes X y Z para que la plataforma solo se mueva verticalmente
+        mp = GetComponent<MovingPlatform>();
     }
 
     // Detecta cuando el jugador entra en contacto con la plataforma para iniciar la secuencia de desmoronamiento

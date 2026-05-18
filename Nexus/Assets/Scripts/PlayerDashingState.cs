@@ -1,0 +1,95 @@
+
+using UnityEngine;
+
+public class PlayerDashingState : PlayerBaseState
+{
+    private float _startTime;
+    private Vector3 _dashDir;
+    private float _dashSpeed;
+
+    public override void EnterState(PlayerController player)
+    {
+        Debug.Log("Iniciando Dash en State Machine");
+        player.isDashing = true;
+        _startTime = Time.time;
+
+        // --- NUEVO CÁLCULO DE DIRECCIÓN (IGUAL AL MOVE) ---
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        Vector3 forward = player.camTransform.forward;
+        Vector3 right = player.camTransform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        _dashDir = forward * v + right * h;
+
+        // Si no estás tocando ninguna tecla, que lo haga hacia adelante
+        if (_dashDir.sqrMagnitude < 0.001f) _dashDir = player.visualRoot.transform.forward;
+
+        _dashDir.Normalize();
+        // --------------------------------------------------
+
+        player.rb.useGravity = false;
+        player.rb.linearVelocity = Vector3.zero;
+
+        float dist = player.dashSettings.dashDistance;
+        // Aplicamos velocidad bruta de inmediato
+        _dashSpeed = dist / 0.5f; // Usamos el tiempo fijo que pusiste para probar
+        player.rb.linearVelocity = _dashDir * _dashSpeed;
+
+        if (player.ghostEffect != null) player.ghostEffect.StartTrail();
+        // SEGURIDAD: Solo intentamos la animación si existe en el Animator
+        if (HasState(player.animator, "a_Dash"))
+        {
+            player.animator.CrossFade("a_Dash", 0.05f);
+        }
+        else
+        {
+            Debug.LogWarning("Animación 'a_Dash' no encontrada. Se usará el GhostEffect como feedback principal.");
+        }
+    }
+    public override void UpdateState(PlayerController player)
+    {
+       /* // NO llamamos a Move(player) aquí. Eso elimina la "pared invisible".
+
+        // Finalizar el Dash por tiempo
+        if (Time.time >= _startTime + player.dashSettings.dashDuration)
+        {
+            EndDash(player);
+        }*/
+        // Forzamos 0.5f a mano para probar
+        if (Time.time >= _startTime + 0.5f)
+        {
+            EndDash(player);
+        }
+    }
+
+    private void EndDash(PlayerController player)
+    {
+        player.rb.linearVelocity = Vector3.zero;
+        player.rb.useGravity = true;
+
+        // DESACTIVAR EL RASTRO
+        if (player.ghostEffect != null)
+        {
+            player.ghostEffect.StopTrail();
+        }
+
+        player.isDashing = false;
+        CheckSwitchState(player);
+    }
+    public override void CheckSwitchState(PlayerController player)
+    {
+        float moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).sqrMagnitude;
+        if (moveInput > 0.01f) player.SwitchState(player.walkingState);
+        else player.SwitchState(player.idleState);
+    }
+
+    private bool HasState(Animator animator, string stateName)
+    {
+        if (animator == null) return false;
+        return animator.HasState(0, Animator.StringToHash(stateName));
+    }
+}

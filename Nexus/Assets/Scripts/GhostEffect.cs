@@ -26,8 +26,9 @@ public class GhostEffect : MonoBehaviour
 
     public void StopTrail()
     {
-        _isTrailActive = false; 
-       // StopCoroutine(GhostTrailGeneration());
+        _isTrailActive = false;
+        // StopCoroutine(GhostTrailGeneration());
+        StopAllCoroutines();
     }
 
     IEnumerator GhostTrailGeneration ( )
@@ -35,8 +36,13 @@ public class GhostEffect : MonoBehaviour
         _isTrailActive = true; // Activa el efecto de fantasma
         while (_isTrailActive)
         {
-            // Create a ghost object at the current position and rotation
-           Instantiate(ghostPrefab, transform.position, transform.rotation);
+          // Generamos el fantasma
+        GameObject currentGhost = Instantiate(ghostPrefab, transform.position, transform.rotation);
+        // REFUERZO POR CÓDIGO: Nos aseguramos de que no tenga collider al nacer
+        if (currentGhost.TryGetComponent<Collider>(out Collider col))
+        {
+            col.enabled = false; 
+        }
             yield return new WaitForSeconds(ghostRate); // Wait before creating the next ghost
         }
     }

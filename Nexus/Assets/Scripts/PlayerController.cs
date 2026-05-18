@@ -7,28 +7,43 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5f;
     public float rayLength = 1.5f;
     //public float health = 100f;
+    public float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
+    public float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo  
     public int remainingJumps = 2;
     public int maxJumps = 2;
     public float rotationSpeed = 10f; // Velocidad de rotación para orientar al player hacia la dirección del movimiento
     public Vector3 raycastOrigin; // Origen del raycast para verificar si el jugador está en el suelo
-    public Vector3 currentDirection;
-    public bool jumpPressed;
+    public Vector3 currentDirection;   
     public Transform camTransform; // Referencia al transform de la cámara para orientar la plataforma hacia la cámara
     public GameObject visualRoot; // Referencia al objeto raíz de la parte visual del jugador para rotarlo hacia la cámara sin afectar la física del jugador
     //public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
     public LayerMask groundLayer; // Capa que representa el suelo para el raycast
     public bool isDashing = false; // Indica si el jugador está actualmente realizando un dash para evitar que pueda moverse o realizar otras acciones durante el dash
     public bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
+    public bool jumpPressed;
+    public bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
+    public Rigidbody rb;
 
     public static PlayerController player;
-    private float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
-    private float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
-    private Rigidbody rb;
+    public PlayerDash dashSettings; // Arrastrá el script PlayerDash aquí en el Inspector
+    public float nextDashTime { get { return dashSettings.nextDashTime; } set { dashSettings.nextDashTime = value; } }
+    public float dashCooldown { get { return dashSettings.dashCooldown; } }
+    public GhostEffect ghostEffect; // Referencia al componente GhostEffect para generar el efecto fantasma al ejecutar el dash
+    public PlayerBaseState currentState;
+    public PlayerBaseState idleState = new PlayerIdleState();
+    public PlayerBaseState walkingState = new PlayerWalkingState();
+    public PlayerBaseState runningState = new PlayerRunningState();
+    public PlayerBaseState jumpingState = new PlayerJumpingState();
+    public PlayerBaseState fallingToLandingState = new PlayerFallingToLandingState();
+    public PlayerBaseState dashingState = new PlayerDashingState();
+    public PlayerBaseState isFlashingDamageState = new PlayerFlashingDamageState();
+    public Animator animator; // Referencia al componente Animator del jugador para controlar las animaciones del jugador
+
+   
     private Vector3 previousPos;
     private Vector3 checkpointPos;
-    
-    private bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
 
+    
     private void Start()
     {
         camTransform = Camera.main.transform; // Obtiene la referencia al transform de la cámara principal
@@ -36,34 +51,53 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
         checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
-        
+        currentState = idleState; // Establece el estado inicial del jugador como idle
+        currentState.EnterState(this); // Llama al método EnterState del estado inicial para realizar cualquier configuración o inicialización necesaria para ese estado
     }
     void Update()
     {
+        currentState.UpdateState(this); // Llama al método UpdateState del estado actual para manejar la lógica de ese estado
         CalculateDirection();
-        //SetCheckpoint(checkpointPos); // Asegura que la posición del checkpoint se actualice constantemente, aunque en este caso no cambia a menos que se llame explícitamente a SetCheckpoint con una nueva posición
-
-        raycastOrigin = transform.position + (Vector3.up * 0.1f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con el suelo
-        bool isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer, QueryTriggerInteraction.Ignore); ; // Realiza un raycast hacia abajo para verificar si el jugador está en el suelo
-        Debug.DrawRay(raycastOrigin, Vector3.down * rayLength, Color.green);
-        // Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
-        if (isGrounded && Time.time > nextGroundCheckTime)
+        CheckGroundedStatus();
+        // DEBUG: Esto te dirá en la consola qué está pasando con el Animator
+        if (animator != null && animator.runtimeAnimatorController != null)
         {
-            if(rb.linearVelocity.y <= 0.1f)
-            { 
-                
+            var info = animator.GetCurrentAnimatorStateInfo(0);
+            // Debug.Log("Animación actual en ejecución: " + info.shortNameHash);
+
+        }
+        // DEBUG DE ANIMACIÓN
+        if (Input.GetKeyDown(KeyCode.T)) // Presioná la T mientras jugás
+        {
+            if (animator != null)
+            {
+                Debug.Log("Intentando forzar Idle manualmente...");
+                animator.Play("a_Idle");
+            }
+            else
+            {
+                Debug.LogError("¡El componente Animator no está asignado!");
+            }
+        }
+    }
+    public bool IsGrounded()
+    {
+        raycastOrigin = transform.position + (Vector3.up * 0.5f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con suelo
+        return Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
+    }
+    public void CheckGroundedStatus() // Método para verificar si el jugador está en el suelo utilizando un raycast
+    { 
+        bool isGrounded = IsGrounded(); // Verifica si el jugador está en el suelo utilizando el método IsGrounded
+        Debug.DrawRay(raycastOrigin, Vector3.down * rayLength, Color.green);
+        // Solo reseteamos saltos, no escuchamos el espacio aquí.
+        if (isGrounded && Time.time > nextGroundCheckTime)// Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
+        {
+            if (rb.linearVelocity.y <= 0.1f)
+            {
                 remainingJumps = maxJumps; // Restablece los saltos disponibles al aterrizar
                 jumpPressed = false; // Reinicia el estado de salto después de realizar un salto
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && remainingJumps > 0) // Si el jugador está en el suelo y presiona la barra espaciadora, realiza un salto siempre que tenga saltos disponibles
-        {
-            if (remainingJumps > 0)
-            {
-                remainingJumps--;
-                Jump();
-            }
-        }
+        }  
         if (isGrounded)
         {
             //Debug.Log("Raycast tocando: " + groundLayer.value);
@@ -73,38 +107,6 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Raycast al aire");
         }
     }
-    void FixedUpdate()
-    {
-        // Obtiene la entrada del jugador para el movimiento horizontal y vertical
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        // Calcula el movimiento en función de la entrada del jugador y la orientación de la cámara
-        Vector3 forwardCam = camTransform.forward.normalized; // Obtiene la dirección hacia adelante de la cámara
-        forwardCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
-        forwardCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
-        Vector3 rightCam = camTransform.right.normalized; // Obtiene la dirección hacia la derecha de la cámara
-        rightCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
-        rightCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
-        Vector3 desiredMove = forwardCam * verticalInput + rightCam * horizontalInput; // Calcula el movimiento deseado en función de la orientación de la cámara (en este caso, no se mueve)
-        if(!isStunned && !isDashing) // Solo permite el movimiento si el jugador no está aturdido por recibir daño
-        { 
-            if (desiredMove.magnitude > 1f)
-            {
-                desiredMove.Normalize(); // Normaliza el movimiento deseado para mantener una velocidad constante incluso cuando se mueve en diagonal
-            }
-
-            // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
-            rb.linearVelocity = new Vector3(desiredMove.x * moveSpeed, rb.linearVelocity.y, desiredMove.z * moveSpeed);
-
-            if(desiredMove != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(desiredMove); // Calcula la rotación objetivo para orientar al player hacia la dirección del movimiento
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime); // Suaviza la rotación del player hacia la rotación objetivo utilizando Slerp
-            }
-        }
-
-    } 
     public void CalculateDirection()
     {
         // Calcula la dirección del movimiento horizontal comparando la posición actual con la posición anterior
@@ -116,19 +118,7 @@ public class PlayerController : MonoBehaviour
         }
         // Actualiza la posición anterior para la próxima comparación
         previousPos = transform.position;
-    }
-    // Aplica una fuerza hacia arriba para realizar un salto y establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
-    public void Jump()
-    {
-        // Antes de aplicar la fuerza de salto, restablece la velocidad vertical del jugador a cero para evitar que el salto se vea afectado por la velocidad actual
-        Vector3 velocity = rb.linearVelocity;
-        velocity.y = 0f;
-        rb.linearVelocity = velocity;
-        // Aplica una fuerza hacia arriba para realizar el salto
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        jumpPressed = true; // Establece el estado de salto para evitar que el jugador pueda saltar nuevamente hasta que aterrice
-        nextGroundCheckTime = Time.time + groundCheckDelay; // Establece el tiempo para el próximo chequeo de suelo después de realizar un salto
-    }
+    }  
     public void SetCheckpoint(Vector3 checkpointPosition)
     {
         checkpointPos = checkpointPosition; // Actualiza la posición del checkpoint
@@ -140,32 +130,19 @@ public class PlayerController : MonoBehaviour
         rb.angularVelocity = Vector3.zero; // Restablece la velocidad angular del jugador para evitar que gire después de reaparecer
         rb.MovePosition(checkpointPos); // Asegura que el Rigidbody del jugador se mueva a la posición del checkpoint para evitar problemas de colisiones o física al reaparecer
         remainingJumps = maxJumps; // Restablece los saltos disponibles al reaparecer
-    }
-    
+    }  
     public IEnumerator DamageFlash()
     {
-        /*if (_playerRenderer != null)
-        {
-            isFlashingDamage = true; // Indica que el jugador está actualmente parpadeando por recibir daño
-            Color originalColor = _playerRenderer.material.color; // Guarda el color original del jugador
-            _playerRenderer.material.color = Color.red; // Cambia el color del jugador a rojo para indicar que ha recibido daño
-            yield return new WaitForSeconds(0.2f); // Espera un breve momento antes de restablecer el color
-            _playerRenderer.material.color = originalColor; // Restablece el color original del jugador después de recibir daño
-            isFlashingDamage = false; // Indica que el jugador ha terminado de parpadear por recibir daño
-        }*/
         if (visualRoot != null)
         {
             isFlashingDamage = true; // Indica que el jugador está actualmente parpadeando por recibir daño
-            Renderer[] renderers = visualRoot.GetComponentsInChildren<Renderer>(); // Obtiene todos los componentes Renderer en el objeto visual del jugador
-            // Usamos MaterialPropertyBlock para un mejor rendimiento en Unity 6
-        foreach (var r in renderers)
+            Renderer[] renderers = visualRoot.GetComponentsInChildren<Renderer>(); // Obtiene todos los componentes Renderer en el objeto visual del jugador        
+        foreach (var r in renderers) // Usamos MaterialPropertyBlock para un mejor rendimiento en Unity 6
             {
                 // En URP el nombre técnico es _BaseColor
                 r.material.SetColor("_BaseColor", Color.red);
             }
-
             yield return new WaitForSeconds(0.2f);
-
             foreach (var r in renderers)
             {
                 // Aquí puedes intentar resetearlo o guardar el color original antes
@@ -176,8 +153,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ApplyKnockback(Vector3 knockbackDirection, float knockbackForce)
     {
-        StartCoroutine(StunPlayerRoutine(knockbackDirection, knockbackForce)); // Inicia la rutina de aturdimiento y aplicación de knockback
-       
+        StartCoroutine(StunPlayerRoutine(knockbackDirection, knockbackForce)); // Inicia la rutina de aturdimiento y aplicación de knockback  
     }
     IEnumerator StunPlayerRoutine(Vector3 knockbackDirection, float knockbackForce)
     {
@@ -187,5 +163,11 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f); // Duración del aturdimiento (puede ser ajustada según tus necesidades)
         isStunned = false; // Indica que el jugador ha terminado de estar aturdido y puede moverse nuevamente
+    }
+    public void SwitchState(PlayerBaseState newState)
+    {
+        if(currentState == newState) return; // Si el nuevo estado es el mismo que el estado actual, no realiza ningún cambio para evitar reiniciar la lógica del estado innecesariamente
+        currentState = newState; // Cambia el estado actual del jugador al nuevo estado
+        currentState.EnterState(this); // Llama al método EnterState del nuevo estado para realizar cualquier configuración o inicialización necesaria para ese estado
     }
 }
