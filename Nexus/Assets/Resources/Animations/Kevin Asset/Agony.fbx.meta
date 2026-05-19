@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4414e6e473934db47abda757f5979bf5
+guid: 33dd963f64b539e4989c668827f56ede
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Getting_damage
+      name: Agony
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 29
+      lastFrame: 111
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

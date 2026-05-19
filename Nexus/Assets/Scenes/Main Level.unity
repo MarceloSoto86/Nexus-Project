@@ -4238,6 +4238,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1856990183}
   m_LocalEulerAnglesHint: {x: -13.477, y: 56.301, z: -117.018}
+--- !u!137 &432988367 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2717395650310496025, guid: d9cd8eb4a074cd84ab2686c58bcf21d9, type: 3}
+  m_PrefabInstance: {fileID: 1856362756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &436235805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1950948648089668605, guid: d04f1da0ec78954469d8771b2b11ed85, type: 3}
@@ -12908,6 +12913,7 @@ MonoBehaviour:
   ghostAppearTime: 0.5
   ghostRate: 0.04
   ghostPrefab: {fileID: 1392062386689488362, guid: af55e0357ba159142a8bb4df16f33ba1, type: 3}
+  _ghostSkinnedMeshRenderer: {fileID: 432988367}
 --- !u!114 &1621848435
 MonoBehaviour:
   m_ObjectHideFlags: 0

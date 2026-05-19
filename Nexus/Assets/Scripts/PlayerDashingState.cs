@@ -6,6 +6,7 @@ public class PlayerDashingState : PlayerBaseState
     private float _startTime;
     private Vector3 _dashDir;
     private float _dashSpeed;
+    
 
     public override void EnterState(PlayerController player)
     {
@@ -30,24 +31,24 @@ public class PlayerDashingState : PlayerBaseState
 
         _dashDir.Normalize();
         // --------------------------------------------------
-
+        // DESACTIVAR GRAVEDAD Y APLICAR VELOCIDAD INICIAL
         player.rb.useGravity = false;
         player.rb.linearVelocity = Vector3.zero;
-
+        // Calculamos la velocidad necesaria para cubrir la distancia del dash en el tiempo deseado
         float dist = player.dashSettings.dashDistance;
         // Aplicamos velocidad bruta de inmediato
-        _dashSpeed = dist / 0.5f; // Usamos el tiempo fijo que pusiste para probar
+        _dashSpeed = dist / player.dashSettings.dashDuration; // Usamos el tiempo fijo que pusiste para probar
         player.rb.linearVelocity = _dashDir * _dashSpeed;
 
         if (player.ghostEffect != null) player.ghostEffect.StartTrail();
         // SEGURIDAD: Solo intentamos la animación si existe en el Animator
-        if (HasState(player.animator, "a_Dash"))
+        if (HasState(player.animator, "a_Dashing"))
         {
-            player.animator.CrossFade("a_Dash", 0.05f);
+            player.animator.CrossFade("a_Dashing", 0.05f);
         }
         else
         {
-            Debug.LogWarning("Animación 'a_Dash' no encontrada. Se usará el GhostEffect como feedback principal.");
+            Debug.LogWarning("Animación 'a_Dashing' no encontrada. Se usará el GhostEffect como feedback principal.");
         }
     }
     public override void UpdateState(PlayerController player)
@@ -63,6 +64,7 @@ public class PlayerDashingState : PlayerBaseState
         if (Time.time >= _startTime + 0.5f)
         {
             EndDash(player);
+            CheckSwitchState(player);
         }
     }
 
@@ -78,7 +80,7 @@ public class PlayerDashingState : PlayerBaseState
         }
 
         player.isDashing = false;
-        CheckSwitchState(player);
+        
     }
     public override void CheckSwitchState(PlayerController player)
     {

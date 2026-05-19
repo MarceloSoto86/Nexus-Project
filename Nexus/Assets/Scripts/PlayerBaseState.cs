@@ -65,12 +65,19 @@ public abstract class PlayerBaseState
     {
         if (player.rb.linearVelocity.y < -0.1f) // Si el jugador está cayendo, cambia al estado de caída
         {
-            if (player.IsGrounded()) // Si el jugador está cayendo y aterriza en el suelo, cambia al estado de caída a aterrizaje
+            // Lanzamos un rayo exclusivo para aterrizar, mucho más corto que el normal
+            Vector3 origin = player.transform.position + (Vector3.up * 0.1f);
+            float strictLandingDistance = 0.2f; // Distancia más corta para detectar el suelo al aterrizar
+
+            bool nearGround = Physics.Raycast(origin, Vector3.down, strictLandingDistance, player.groundLayer, QueryTriggerInteraction.Ignore);
+
+            if (nearGround) // Si el jugador está cayendo y aterriza en el suelo, cambia al estado de caída a aterrizaje
             {
                 // FRENADO VERTICAL: Evita que la inercia lo hunda en el suelo
                 Vector3 vel = player.rb.linearVelocity;
                 vel.y = 0;
                 player.rb.linearVelocity = vel;
+
                 player.SwitchState(player.fallingToLandingState);
             }
         } 

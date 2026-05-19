@@ -13,7 +13,7 @@ public class PlayerStatus : MonoBehaviour
     public float maxHealth = 100; // Valor máximo de salud del jugador 
     
     public PlayerController _playerController; // Referencia al script PlayerController para acceder a su estado y funciones
-    
+
     public static event Action OnMemoryStoreUnlocked; // Evento que se dispara cuando se desbloquea un nuevo slot de memoria
 
     private void Start()
@@ -32,8 +32,8 @@ public class PlayerStatus : MonoBehaviour
         if(_currentMemory <= 0)
         {
             _currentMemory = 0; // Asegura que la memoria no sea negativa
-            _playerController.Respawn();
-            ResetStatus(); // Si la memoria llega a cero, el jugador reaparece en el checkpoint y se restablece su salud y memoria al máximo
+            
+            _playerController.SwitchState(_playerController.dyingFromInsanityState); // Cambia al estado de muerte por locura si la memoria llega a cero
         }
 
     }
@@ -48,8 +48,10 @@ public class PlayerStatus : MonoBehaviour
         if (currentHealth <= 0f)
         {
             currentHealth = 0f; // Asegura que la salud no sea negativa
-            _playerController.Respawn(); // Si la salud llega a cero o menos, el jugador reaparece en el checkpoint
-            ResetStatus(); // Restablece la salud y la memoria del jugador al reaparecer
+                                //_playerController.Respawn(); // Si la salud llega a cero o menos, el jugador reaparece en el checkpoint
+            
+            _playerController.SwitchState(_playerController.dyingFromDamageState); // Cambia al estado de muerte por daño para reproducir la animación de muerte y luego reaparecer al jugador
+            
         }
         else
         {
@@ -57,6 +59,7 @@ public class PlayerStatus : MonoBehaviour
             {
                 StartCoroutine(_playerController.DamageFlash()); // Inicia la rutina de parpadeo de daño si el jugador recibe daño pero no muere
             }
+            _playerController.SwitchState(_playerController.isFlashingDamageState);
         }
     }
 

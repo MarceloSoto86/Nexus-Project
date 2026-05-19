@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     public PlayerBaseState fallingToLandingState = new PlayerFallingToLandingState();
     public PlayerBaseState dashingState = new PlayerDashingState();
     public PlayerBaseState isFlashingDamageState = new PlayerFlashingDamageState();
+    public PlayerBaseState dyingFromInsanityState = new PlayerDeathFromInsanityState();
+    public PlayerBaseState dyingFromDamageState = new PlayerDeathFromDmgState();
     public Animator animator; // Referencia al componente Animator del jugador para controlar las animaciones del jugador
 
    
