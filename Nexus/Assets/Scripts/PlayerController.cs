@@ -8,7 +8,11 @@ public class PlayerController : MonoBehaviour
     public float rayLength = 1.5f;
     //public float health = 100f;
     public float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
-    public float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo  
+    public float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
+    public float deathYThreshold = -15f; // Altura a la que el jugador muere automáticamente si cae por debajo de ella
+    public float nextDashTime { get { return dashSettings.nextDashTime; } set { dashSettings.nextDashTime = value; } }
+    public float dashCooldown { get { return dashSettings.dashCooldown; } }
+
     public int remainingJumps = 2;
     public int maxJumps = 2;
     public float rotationSpeed = 10f; // Velocidad de rotación para orientar al player hacia la dirección del movimiento
@@ -26,8 +30,7 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController player;
     public PlayerDash dashSettings; // Arrastrá el script PlayerDash aquí en el Inspector
-    public float nextDashTime { get { return dashSettings.nextDashTime; } set { dashSettings.nextDashTime = value; } }
-    public float dashCooldown { get { return dashSettings.dashCooldown; } }
+    
     public GhostEffect ghostEffect; // Referencia al componente GhostEffect para generar el efecto fantasma al ejecutar el dash
     public PlayerBaseState currentState;
     public PlayerBaseState idleState = new PlayerIdleState();
@@ -39,13 +42,12 @@ public class PlayerController : MonoBehaviour
     public PlayerBaseState isFlashingDamageState = new PlayerFlashingDamageState();
     public PlayerBaseState dyingFromInsanityState = new PlayerDeathFromInsanityState();
     public PlayerBaseState dyingFromDamageState = new PlayerDeathFromDmgState();
+    public PlayerBaseState panickedFallingState = new PlayerPanickedFallingState();
     public Animator animator; // Referencia al componente Animator del jugador para controlar las animaciones del jugador
-
-   
+ 
     private Vector3 previousPos;
     private Vector3 checkpointPos;
 
-    
     private void Start()
     {
         camTransform = Camera.main.transform; // Obtiene la referencia al transform de la cámara principal

@@ -7,8 +7,8 @@ public class MemoryFlashes : ScriptableObject
 {
     public float _numberID;
     public Sprite _imageMemory;
-    public TextMeshPro _textMeshProMemory;
+    public string _narrativeText;
     public Sprite _nitidFaceImg; // Imagen de la cara nitida desbloqueada
-    public TextMeshPro _nitidFaceText; // Texto de la cara nitida desbloqueada
+    public string _nitidFaceText; // Texto de la cara nitida desbloqueada
     public AudioClip _audioClipMemory; // Audio del recuerdo
 }

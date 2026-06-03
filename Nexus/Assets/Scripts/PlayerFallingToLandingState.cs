@@ -5,7 +5,7 @@ public class PlayerFallingToLandingState : PlayerBaseState
     public override void EnterState(PlayerController player)
     {
         Debug.Log("Player está en FallingToLanding State");
-        player.animator.CrossFade("Falling To Landing", 0.1f); // Reproduce la animación de caer a aterrizar con una transición suave.
+        player.animator.CrossFade("a_FallingToLanding", 0.1f); // Reproduce la animación de caer a aterrizar con una transición suave.
     }
     public override void UpdateState(PlayerController player)
     {

@@ -11,25 +11,32 @@ public class PlayerStatus : MonoBehaviour
     public float _memoryDecreaseRate; // Tasa a la que la memoria disminuye
     public float currentHealth; // Valor actual de salud del jugador
     public float maxHealth = 100; // Valor máximo de salud del jugador 
-    
+
+    public PlayerEvents _playerEvents;
     public PlayerController _playerController; // Referencia al script PlayerController para acceder a su estado y funciones
 
     public static event Action OnMemoryStoreUnlocked; // Evento que se dispara cuando se desbloquea un nuevo slot de memoria
 
     private void Start()
     {
+        _playerEvents = GetComponent<PlayerEvents>();
         _playerController = GetComponent<PlayerController>();
         currentHealth = maxHealth;
         _currentMemory = _memoryMax;
-        _memorySlot = 1; // Inicialmente, el jugador tiene un slot de memoria ocupado
+        _memorySlot = 1; // Inicialmente, el jugador tiene un slot de memoria ocupado       
     }
 
     public void Update()
     {
         _currentMemory -= (_memoryDecreaseRate * Time.deltaTime); // Disminuye la memoria actual según la tasa de disminución
         _currentMemory = Mathf.Clamp(_currentMemory, 0, _memoryPerSlot * _memorySlot); // Asegura que la memoria actual no exceda el máximo permitido por los slots ocupados
+                                                                                       // Mandamos los datos frescos a la antena en cada frame
+        if (_playerEvents != null)
+        {
+            _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot);
+        }
 
-        if(_currentMemory <= 0)
+        if (_currentMemory <= 0)
         {
             _currentMemory = 0; // Asegura que la memoria no sea negativa
             
@@ -71,14 +78,16 @@ public class PlayerStatus : MonoBehaviour
 
     public void UnlockNextMemorySlot()
     {
-        if (_memorySlot < 4) // Asegura que el número de slots de memoria no exceda un límite (por ejemplo, 4)
+        if (_memorySlot < 4)
         {
-            _memorySlot++; // Incrementa el número de slots de memoria ocupados
+            _memorySlot++;
+            RestoreMemory(_memoryPerSlot);
 
-            RestoreMemory(_memoryPerSlot); // Restaura la memoria del jugador al desbloquear un nuevo slot
-
-            OnMemoryStoreUnlocked?.Invoke(); // Dispara el evento de desbloqueo de slot de memoria para que otros scripts puedan reaccionar a este cambio
-            //_currentMemory = _memoryPerSlot * _memorySlot; // Actualiza la memoria actual al máximo permitido por los nuevos slots ocupados
+            // Invocación a través de la arquitectura de eventos limpia
+            if (_playerEvents != null)
+            {
+                _playerEvents.RaiseMemoryStoreUnlocked();
+            }
         }
     }
 

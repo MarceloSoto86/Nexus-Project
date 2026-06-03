@@ -17,12 +17,12 @@ MonoBehaviour:
   enemyID: 0
   healthPoints: 20
   damagePoints: 5
-  movementSpeed: 2
+  movementSpeed: 3
   attackRange: 20
-  detectionRange: 20
-  attackCooldown: 1.5
+  detectionRange: 12
+  attackCooldown: 1
   detectionCooldown: 0.5
-  projectileSpeed: 5
+  projectileSpeed: 10
   visualColorChangeDuration: 0
   pointValue: 0
   knockbackForce: 4

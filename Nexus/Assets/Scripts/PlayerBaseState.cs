@@ -63,8 +63,15 @@ public abstract class PlayerBaseState
 
     protected void HandleFallingAndLanding(PlayerController player)
     {
+       
+        
         if (player.rb.linearVelocity.y < -0.1f) // Si el jugador está cayendo, cambia al estado de caída
         {
+            if (player.transform.position.y < player.deathYThreshold && player.currentState != player.panickedFallingState)
+            {
+                player.SwitchState(player.panickedFallingState);
+                return;
+            }
             // Lanzamos un rayo exclusivo para aterrizar, mucho más corto que el normal
             Vector3 origin = player.transform.position + (Vector3.up * 0.1f);
             float strictLandingDistance = 0.2f; // Distancia más corta para detectar el suelo al aterrizar
@@ -80,6 +87,7 @@ public abstract class PlayerBaseState
 
                 player.SwitchState(player.fallingToLandingState);
             }
+            
         } 
     }
 }

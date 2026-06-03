@@ -10,19 +10,44 @@ public class MemoryManager : MonoBehaviour
     public Image _faceHUDImageUI;
     public TextMeshProUGUI _textMeshPro;
     public CanvasGroup _canvasGroup;
-    
+    public static MemoryManager Instance; // Singleton para facilitar el acceso desde otros scripts
+
 
     public float fadeInDuration = 1f; // Duración del fade in
     public float displayDuration = 2f; // Duración de la imagen visible
     public float fadeOutDuration = 1f; // Duración del fade out
 
-IEnumerator Fade(MemoryFlashes data)
+    private bool _isMemoryActive = false; // Variable para controlar si un recuerdo está activo
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    IEnumerator Fade(MemoryFlashes data)
     {         
         Time.timeScale = 0f; // Pausa el juego
+        // Asigna el texto narrativo del recuerdo al TextMeshPro para mostrarlo en el HUD. Asegúrate de que el TextMeshPro esté correctamente referenciado en el inspector y que el ScriptableObject tenga el texto asignado.
+        if (data != null && _textMeshPro != null)
+        {
+            _textMeshPro.text = data._narrativeText; // Muestra el texto narrativo del recuerdo en el TextMeshPro
+        }
+
         PlayMemory(data); // Reproduce el recuerdo con la información del ScriptableObject
+
+        gameObject.SetActive(true);
+
         // Aseguramos que el contenedor esté activo (aunque el alpha sea 0)
         _displayImageUI.gameObject.SetActive(true);
         _textMeshPro.gameObject.SetActive(true);
+
         // Fade in
         float elapsedTime = 0f;
         while (elapsedTime < fadeInDuration)
@@ -33,9 +58,9 @@ IEnumerator Fade(MemoryFlashes data)
         }
 
         _canvasGroup.alpha = 1f; // Asegura que la imagen esté completamente visible
-        //_textMeshPro.text = "Recuerdo: " + _imageMemory.name; // Muestra el nombre del sprite como texto. Modificar el texto para mostrar la información que deseas sobre el recuerdo, como una descripción o un mensaje relacionado con la imagen.
-        // Display duration
+        
         yield return new WaitForSecondsRealtime(displayDuration); // Mantiene la imagen visible durante el tiempo especificado
+
         // Fade out
         elapsedTime = 0f;
         while (elapsedTime < fadeOutDuration)
@@ -57,8 +82,11 @@ IEnumerator Fade(MemoryFlashes data)
             _canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
     }
+
+    
     public void TriggerMemory(MemoryFlashes data)
     {
+        
         StartCoroutine(Fade(data)); // Llama a la corrutina de fade para mostrar el recuerdo cuando se active el trigger.
     }
     public void PlayMemory(MemoryFlashes data)
