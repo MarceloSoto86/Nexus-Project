@@ -40,6 +40,8 @@ public class PlayerDashingState : PlayerBaseState
         _dashSpeed = dist / player.dashSettings.dashDuration; // Usamos el tiempo fijo que pusiste para probar
         player.rb.linearVelocity = _dashDir * _dashSpeed;
 
+        player.dashSettings.canDashInAir = false; // Permitir dash en el aire (puedes ajustar esto según tus necesidades)
+
         if (player.ghostEffect != null) player.ghostEffect.StartTrail();
         // SEGURIDAD: Solo intentamos la animación si existe en el Animator
         if (HasState(player.animator, "a_Dashing"))
@@ -53,13 +55,6 @@ public class PlayerDashingState : PlayerBaseState
     }
     public override void UpdateState(PlayerController player)
     {
-       /* // NO llamamos a Move(player) aquí. Eso elimina la "pared invisible".
-
-        // Finalizar el Dash por tiempo
-        if (Time.time >= _startTime + player.dashSettings.dashDuration)
-        {
-            EndDash(player);
-        }*/
         // Forzamos 0.5f a mano para probar
         if (Time.time >= _startTime + 0.5f)
         {

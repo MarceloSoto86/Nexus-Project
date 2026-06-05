@@ -14,7 +14,7 @@ public class CheckpointController : MonoBehaviour
                 Debug.Log("Security system activated at checkpoint: " + transform.position); // Imprime un mensaje de depuración indicando que el sistema de seguridad ha sido activado
             }
             PlayerController playerController = other.GetComponentInParent<PlayerController>();
-            //PlayerController playerController = other.GetComponent<PlayerController>();
+            
             if (playerController != null)
             {
                 playerController.SetCheckpoint(transform.position); // Establece la posición del checkpoint al jugador

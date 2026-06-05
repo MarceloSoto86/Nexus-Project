@@ -54,7 +54,9 @@ public class PlayerController : MonoBehaviour
         player = this; // Asigna la instancia actual del jugador a la variable estática para que pueda ser accedida desde otros scripts
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
-        checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
+
+        //checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
+
         currentState = idleState; // Establece el estado inicial del jugador como idle
         currentState.EnterState(this); // Llama al método EnterState del estado inicial para realizar cualquier configuración o inicialización necesaria para ese estado
     }
@@ -100,6 +102,9 @@ public class PlayerController : MonoBehaviour
             {
                 remainingJumps = maxJumps; // Restablece los saltos disponibles al aterrizar
                 jumpPressed = false; // Reinicia el estado de salto después de realizar un salto
+
+                // --- RECARGA DEL DASH TERRESTRE ---
+                dashSettings.canDashInAir = true;
             }
         }  
         if (isGrounded)

@@ -22,8 +22,38 @@ public class PlayerStatus : MonoBehaviour
         _playerEvents = GetComponent<PlayerEvents>();
         _playerController = GetComponent<PlayerController>();
         currentHealth = maxHealth;
-        _currentMemory = _memoryMax;
-        _memorySlot = 1; // Inicialmente, el jugador tiene un slot de memoria ocupado       
+        //_currentMemory = _memoryMax;
+        _currentMemory = 25f; // Inicialmente, la memoria actual se establece en función de los slots ocupados
+        _memorySlot = 1; // Inicialmente, el jugador tiene un slot de memoria ocupado
+        PlayerData savedData = SaveSystem.instance.LoadGame(); // Carga los datos guardados del jugador al iniciar el juego
+        if (savedData != null)
+        {
+            _memorySlot = savedData.memoryCurrentSlotsUnlocked;
+            currentHealth = savedData.currentHealth;
+
+            Vector3 loadedPosition = new Vector3(savedData.xPosition, savedData.yPosition, savedData.zPosition);
+
+            Rigidbody playerRb = GetComponent<Rigidbody>();
+            if (playerRb != null)
+            {
+                {
+                    playerRb.linearVelocity = Vector3.zero; // Detiene cualquier movimiento residual del jugador al cargar su posición
+                    playerRb.angularVelocity = Vector3.zero; // Detiene cualquier rotación residual del jugador al cargar su posición
+                }
+
+                transform.position = loadedPosition; // Establece la posición del jugador a la posición guardada en los datos cargados para que el jugador comience en el mismo lugar donde guardó su progreso
+
+                Physics.SyncTransforms(); // Sincroniza las transformaciones físicas para asegurarse de que la posición del jugador se actualice correctamente en el motor de física después de cargar los datos
+
+                if (_playerController != null)
+                {
+                    _playerController.SetCheckpoint(loadedPosition); // Establece el checkpoint del jugador a la posición cargada para que el jugador reaparezca en el mismo lugar donde guardó su progreso al morir o reiniciar el juego
+                }
+                _memorySlot = savedData.memoryCurrentSlotsUnlocked;
+                _currentMemory = _memorySlot * _memoryPerSlot; // Si carga 1 slot, arranca en 25 de energía, no en 100. 
+                _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot); // Actualiza el HUD de memoria con los datos cargados del jugador para reflejar su estado de memoria actual al iniciar el juego
+            }
+        }
     }
 
     public void Update()

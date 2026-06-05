@@ -20,6 +20,13 @@ public class PlayerEvents : MonoBehaviour
     public void TriggerCheckpoint(float checkpointHeight)
     {
         OnCheckpointReached?.Invoke(checkpointHeight); // Invoca el evento de punto de control alcanzado por el jugador
+
+        PlayerStatus status = GetComponent<PlayerStatus>(); // Obtiene el componente PlayerStatus del jugador para acceder a su estado y funciones
+        if (status != null)
+        {
+            SaveSystem.instance.SaveGame(status); // Guarda el progreso del jugador al alcanzar un nuevo punto de control
+        }
+       
         Debug.Log("Evento lanzado: " + checkpointHeight);
     }
     // --- MÉTODOS DISPARADORES PARA EL STATUS ---

@@ -22,14 +22,16 @@ public class MemorySerum : MonoBehaviour
                 { 
                     playerStatus.UnlockNextMemorySlot(); // Desbloquea el siguiente slot de memoria
                 }
+
+                if (collectEffect != null)
+                {
+                    Instantiate(collectEffect, transform.position, Quaternion.identity); // Instancia el efecto de recolección en la posición del suero de memoria
+                }
                 Destroy(gameObject); // Destruye el objeto del suero de memoria después de recogerlo
             }
         }
 
-        if (collectEffect != null)
-        {
-            Instantiate(collectEffect, transform.position, Quaternion.identity); // Instancia el efecto de recolección en la posición del suero de memoria
-        }
+        
     }
 
     

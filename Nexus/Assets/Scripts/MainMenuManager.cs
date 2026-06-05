@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -8,10 +9,19 @@ public class MainMenuManager : MonoBehaviour
     public GameObject mainMenuPanel;
     public GameObject settingsPanel;
     public List<GameObject> settingsContent;
+    public Button continueGameButton;
     //public List<GameObject> settingsButtons;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if(SaveSystem.instance != null && System.IO.File.Exists(SaveSystem.instance.filePath))
+        {
+            continueGameButton.interactable = true; // Habilita el botón de "Continuar" si existe un archivo de guardado
+        }
+        else
+        {
+            continueGameButton.interactable = false; // Deshabilita el botón de "Continuar" si no existe un archivo de guardado
+        }
         ChangeTab(0);
     }
 
@@ -62,9 +72,25 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    public void StartNewGame()
     {
+        if(SaveSystem.instance != null)
+        {
+            SaveSystem.instance.DeleteSavedData(); // Elimina el archivo de guardado existente al iniciar un nuevo juego para asegurarse de que el jugador comience desde cero sin cargar un progreso anterior.
+        }
         SceneManager.LoadScene("Main Level");
+    }
+
+    public void ContinueGame()
+    {
+        if(SaveSystem.instance != null && System.IO.File.Exists(SaveSystem.instance.filePath))
+        {
+            SceneManager.LoadScene("Main Level");
+        }
+        else
+        {
+            Debug.LogWarning("No saved game found. Please start a new game.");
+        }
     }
     public void QuitGame()
     {

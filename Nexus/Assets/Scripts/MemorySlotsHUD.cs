@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,13 +10,14 @@ public class MemorySlotsHUD : MonoBehaviour
     [SerializeField] private Image[] memorySlotIcons; // Array de imágenes para los iconos de los slots de memoria
     [SerializeField] private Color activeSlotColour = Color.magenta; // Color para los slots de memoria llenos
     [SerializeField] private Color lockedSlotColour = new Color(0.2f, 0.2f, 0.2f, 0.5f); // Color para los slots de memoria bloqueados
-    
 
+    private float _previousUnlockedCount; // Variable para almacenar la cantidad de slots de memoria desbloqueados en la actualización anterior para evitar actualizaciones innecesarias del HUD de memoria si la cantidad de slots de memoria desbloqueados no ha cambiado desde la última actualización, lo que mejora el rendimiento al reducir la cantidad de cálculos y actualizaciones visuales que se realizan cada vez que se actualiza el HUD de memoria
     private float _maxPointsPerSlot = 25f; // Variable para almacenar la cantidad máxima de puntos por slot de memoria
 
     private void Awake()
     {
         _mainSlider = GetComponent<Slider>(); // Obtener la referencia al componente Slider del objeto para actualizar su valor en función de la memoria actual del jugador
+        _previousUnlockedCount = 1; // Inicializar la cantidad de slots de memoria desbloqueados en la variable _previousUnlockedCount a 1 al inicio del juego para reflejar que el jugador comienza con un slot de memoria desbloqueado y evitar actualizaciones innecesarias del HUD de memoria si la cantidad de slots de memoria desbloqueados no ha cambiado desde la última actualización
     }
 
     public void RefreshSanityHUD(float currentSanity, int unlockedSlotsCount)
@@ -25,8 +27,20 @@ public class MemorySlotsHUD : MonoBehaviour
             _mainSlider.value = currentSanity; // Actualizar el valor del slider principal de memoria en función de la cordura actual del jugador para mostrar al jugador su estado de memoria actual de manera visual a través del slider
         }
         UpdateSlotsDisplay(currentSanity, unlockedSlotsCount); // Llamar al método UpdateSlotsDisplay para actualizar la visualización de los slots de memoria en función de la cordura actual del jugador y la cantidad de slots de memoria desbloqueados
+        if(unlockedSlotsCount > _previousUnlockedCount)
+        {
+            if(_previousUnlockedCount >= 1 && currentSanity > _maxPointsPerSlot)
+            {
+                StartCoroutine(AnimateSlotUnlock(unlockedSlotsCount - 1)); // Iniciar la corrutina AnimateSlotUnlock para animar el desbloqueo del nuevo slot de memoria desbloqueado restando 1 al nuevo valor de unlockedSlotsCount para reflejar el cambio en la cantidad de slots de memoria desbloqueados y mostrar al jugador una animación visual que indique que ha desbloqueado un nuevo slot de memoria
+            }
+            _previousUnlockedCount = unlockedSlotsCount; // Actualizar la cantidad de slots de memoria desbloqueados en la variable _previousUnlockedCount restando 1 al nuevo valor de unlockedSlotsCount para reflejar el cambio en la cantidad de slots de memoria desbloqueados y evitar actualizaciones innecesarias del HUD de memoria si la cantidad de slots de memoria desbloqueados no ha cambiado desde la última actualización
+        }
 
 
+    }
+    private void Start()
+    {
+        
     }
 
     private void OnEnable()
@@ -68,4 +82,37 @@ public class MemorySlotsHUD : MonoBehaviour
         // Súper importante: Rompemos el lazo al desactivar el objeto para no saturar la memoria RAM
         PlayerEvents.OnSanityChanged -= RefreshSanityHUD;
     }
-}
+
+    IEnumerator AnimateSlotUnlock(int slotIndex)
+    {
+        float animationDuration = 0.05f; // Duración de la animación en segundos
+        float elapsedTime = 0f;
+        float shrinkDuration = 0.1f; // Duración de la animación de encogimiento en segundos
+
+        while (elapsedTime < animationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / animationDuration);
+
+            // Aquí puedes agregar la lógica de animación, por ejemplo, cambiar el color o el tamaño del icono del slot de memoria
+            memorySlotIcons[slotIndex].color = Color.Lerp(lockedSlotColour, activeSlotColour, t);
+            memorySlotIcons[slotIndex].rectTransform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 1.2f, t); // Animación de escala para hacer que el icono del slot de memoria "salte" al desbloquearse
+            yield return null;
+        }
+
+        elapsedTime = 0f; // Reiniciar el tiempo transcurrido para la animación de encogimiento
+
+        while (elapsedTime < shrinkDuration)
+        { 
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / shrinkDuration);
+            memorySlotIcons[slotIndex].rectTransform.localScale = Vector3.Lerp(Vector3.one * 1.2f, Vector3.one, t); // Animación de escala para hacer que el icono del slot de memoria "salte" al desbloquearse
+
+            yield return null;
+        }
+
+        // Asegurarse de que el slot de memoria esté completamente desbloqueado al final de la animación
+        memorySlotIcons[slotIndex].color = activeSlotColour;
+        memorySlotIcons[slotIndex].transform.localScale = Vector3.one;
+    }
+ }
