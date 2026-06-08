@@ -4,6 +4,7 @@ public class PlayerDeathFromDmgState : PlayerBaseState
 {
     private float _deathStartTime;
     private float _deathDuration = 5f; // Duración de la animación de muerte, ajusta según tu animación
+    //public PlayerController playerController; // Referencia al PlayerController para acceder a sus métodos y variables
     public override void EnterState(PlayerController player)
     {
         Debug.Log("Player está en Dying from Damage State");
@@ -29,7 +30,7 @@ public class PlayerDeathFromDmgState : PlayerBaseState
             return;
         }
 
-        if (player.IsGrounded())
+        if (player.IsGrounded(player.rayLength))
         {
             player.rb.isKinematic = true; // Detener la física para evitar que el jugador se mueva o caiga
         }

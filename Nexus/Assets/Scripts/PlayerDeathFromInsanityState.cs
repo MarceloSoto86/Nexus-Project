@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerDeathFromInsanityState : PlayerBaseState
 {
+    
+
     private float _deathStartTime;
     private float _agonyDuration = 3f; // Duración de la animación de agonía, ajusta según tu animación
     private float _deathDuration = 5f; // Duración de la animación de muerte, ajusta según tu animación
@@ -25,7 +27,7 @@ public class PlayerDeathFromInsanityState : PlayerBaseState
             //_deathStartTime = Time.time; // Reiniciamos el tiempo para contar la duración de la animación de muerte
         }
 
-        if (player.IsGrounded() && _hasCollapsed == true)
+        if (player.IsGrounded(player.rayLength) && _hasCollapsed == true)
         {
             player.rb.isKinematic = true;
         }

@@ -47,6 +47,7 @@ public class SaveSystem : MonoBehaviour
         data.xPosition = player.transform.position.x;
         data.yPosition = player.transform.position.y;
         data.zPosition = player.transform.position.z;
+        data.collectedItemIDs = player.activeCollectedItemIDs;
         string json = JsonUtility.ToJson(data,true);
         File.WriteAllText(filePath, json);
         Debug.Log("Juego guardado en: " + filePath);

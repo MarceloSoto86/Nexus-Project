@@ -2497,7 +2497,7 @@ GameObject:
   - component: {fileID: 288259182}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5362,7 +5362,7 @@ GameObject:
   - component: {fileID: 598149067}
   m_Layer: 5
   m_Name: HUD Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7538,10 +7538,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemorySlotsHUD
   memorySlotIcons:
-  - {fileID: 582425452}
-  - {fileID: 2028144883}
-  - {fileID: 701532582}
   - {fileID: 452764088}
+  - {fileID: 701532582}
+  - {fileID: 2028144883}
+  - {fileID: 582425452}
   activeSlotColour: {r: 1, g: 0, b: 1, a: 1}
   lockedSlotColour: {r: 0.2, g: 0.2, b: 0.2, a: 0.5}
 --- !u!4 &843074749 stripped
@@ -8072,7 +8072,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -14535,6 +14535,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   useGravityDuringDash: 0
+  canDashInAir: 1
 --- !u!23 &1621848430 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1062303140901065180, guid: b4cf5a8a68c5c2d41b90920992006d51, type: 3}
@@ -16357,7 +16358,7 @@ GameObject:
   - component: {fileID: 1936667983}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18710,6 +18711,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f5c864403b5ed41418673a39279d7306, type: 2}
     - target: {fileID: 6215465198028303034, guid: eec5680f87baa804696629c635671da5, type: 3}
       propertyPath: m_Name
+      value: KillZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215465198028303034, guid: eec5680f87baa804696629c635671da5, type: 3}
+      propertyPath: m_TagString
       value: KillZone
       objectReference: {fileID: 0}
     - target: {fileID: 8602310400255588990, guid: eec5680f87baa804696629c635671da5, type: 3}

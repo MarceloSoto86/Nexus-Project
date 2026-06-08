@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     //public float health = 100f;
     public float groundCheckDelay = 0.15f; // Distancia para verificar si el jugador está en el suelo
     public float nextGroundCheckTime = 0f; // Tiempo para el próximo chequeo de suelo
+    public float maxAirDashWindow = 1.2f; // Tiempo máximo después de despegar del suelo durante el cual el jugador aún puede realizar un dash aéreo (Coyote Dash)
     public float deathYThreshold = -15f; // Altura a la que el jugador muere automáticamente si cae por debajo de ella
     public float nextDashTime { get { return dashSettings.nextDashTime; } set { dashSettings.nextDashTime = value; } }
     public float dashCooldown { get { return dashSettings.dashCooldown; } }
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public GameObject visualRoot; // Referencia al objeto raíz de la parte visual del jugador para rotarlo hacia la cámara sin afectar la física del jugador
     //public Renderer _playerRenderer; // Referencia al componente Renderer del jugador para cambiar su color al recibir daño
     public LayerMask groundLayer; // Capa que representa el suelo para el raycast
+    public LayerMask dashZoneLayer; // Asignada en el Inspector a la capa "DashBoosters" o "Cables"
     public bool isDashing = false; // Indica si el jugador está actualmente realizando un dash para evitar que pueda moverse o realizar otras acciones durante el dash
     public bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
     public bool jumpPressed;
@@ -47,6 +49,8 @@ public class PlayerController : MonoBehaviour
  
     private Vector3 previousPos;
     private Vector3 checkpointPos;
+    private float _lastimeGrounded; // Variable para almacenar el último tiempo que el jugador estuvo en el suelo, para dar un pequeño margen de tiempo para permitir saltar después de despegar del suelo (coyote time)
+
 
     private void Start()
     {
@@ -86,14 +90,22 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    public bool IsGrounded()
+
+    public bool IsGrounded(float checkDistance)
     {
         raycastOrigin = transform.position + (Vector3.up * 0.5f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con suelo
-        return Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
+        return Physics.Raycast(raycastOrigin, Vector3.down, checkDistance, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
     }
+
+    /* public bool IsGrounded()
+     {
+         raycastOrigin = transform.position + (Vector3.up * 0.5f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con suelo
+         return Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
+     }*/
     public void CheckGroundedStatus() // Método para verificar si el jugador está en el suelo utilizando un raycast
     { 
-        bool isGrounded = IsGrounded(); // Verifica si el jugador está en el suelo utilizando el método IsGrounded
+        bool isGrounded = IsGrounded(rayLength); // Verifica si el jugador está en el suelo utilizando el método IsGrounded
+        _lastimeGrounded = isGrounded ? Time.time : _lastimeGrounded; // Actualiza el último tiempo que el jugador estuvo en el suelo si está actualmente en el suelo
         Debug.DrawRay(raycastOrigin, Vector3.down * rayLength, Color.green);
         // Solo reseteamos saltos, no escuchamos el espacio aquí.
         if (isGrounded && Time.time > nextGroundCheckTime)// Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
@@ -107,13 +119,13 @@ public class PlayerController : MonoBehaviour
                 dashSettings.canDashInAir = true;
             }
         }  
-        if (isGrounded)
-        {
-            //Debug.Log("Raycast tocando: " + groundLayer.value);
-        }
+        
         else
         {
-            //Debug.Log("Raycast al aire");
+            if (remainingJumps == maxJumps)
+            {
+                remainingJumps = maxJumps - 1;
+            }
         }
     }
     public void CalculateDirection()
@@ -163,6 +175,46 @@ public class PlayerController : MonoBehaviour
     public void ApplyKnockback(Vector3 knockbackDirection, float knockbackForce)
     {
         StartCoroutine(StunPlayerRoutine(knockbackDirection, knockbackForce)); // Inicia la rutina de aturdimiento y aplicación de knockback  
+    }
+
+    public bool IsPathSafe()
+    {
+        // 1. Realiza un raycast en la dirección del movimiento para verificar si hay obstáculos en el camino
+        if (IsGrounded(rayLength)) return true; // Si el jugador está en el suelo, el camino es seguro
+
+        // 2. Si el jugador no está en el suelo, realiza un raycast en la dirección del movimiento para verificar si hay obstáculos en el camino
+        float maxSafeFallDistance = 15f; // Distancia máxima que el jugador puede caer sin morir
+
+        // Si el tiempo transcurrido desde que dejó el suelo es menor al margen de gracia...
+        if (Time.time - _lastimeGrounded <= maxAirDashWindow)
+        {
+            return true; // Da luz verde inmediata por habilidad de salida (Coyote Dash)
+        }
+        // Calculamos un vector diagonal hacia adelante y abajo
+        Vector3 diagonalDir = (Vector3.down + currentDirection).normalized;
+
+        bool hitGround = Physics.Raycast(transform.position, Vector3.down, maxSafeFallDistance, groundLayer, QueryTriggerInteraction.Ignore); // Realiza un raycast hacia abajo para verificar si hay suelo debajo del jugador dentro de la distancia segura de caída
+        bool hitDashZone = Physics.Raycast(transform.position, diagonalDir, maxSafeFallDistance, dashZoneLayer, QueryTriggerInteraction.Ignore); // Realiza un raycast hacia abajo para verificar si hay una zona de dash debajo del jugador dentro de la distancia segura de caída
+
+        if(hitGround || hitDashZone) // Si el raycast golpea algo, verifica si es un terreno seguro (puedes usar capas o tags para identificar terrenos seguros)
+        {
+            return true; // Si golpea algo, el camino es seguro
+        }
+        else
+        {
+            Debug.Log("¡Dash bloqueado! No hay terreno seguro debajo del jugador.");
+            return false; // Si no golpea nada, el camino no es seguro
+        }
+
+        /*bool hitSomething = IsGrounded(maxSafeFallDistance); // Verifica si hay algo debajo del jugador dentro de la distancia segura de caída
+
+        // 3. Si el raycast golpea algo, verifica si es un terreno seguro (puedes usar capas o tags para identificar terrenos seguros)
+        if (!hitSomething)
+        {
+           Debug.Log("¡Dash bloqueado! No hay terreno seguro debajo del jugador.");
+            return false; // Si no golpea nada, el camino no es seguro
+        }
+        return true; // Si golpea algo, el camino es seguro*/
     }
     IEnumerator StunPlayerRoutine(Vector3 knockbackDirection, float knockbackForce)
     {

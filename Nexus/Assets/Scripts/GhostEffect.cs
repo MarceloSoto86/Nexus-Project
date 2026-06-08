@@ -13,13 +13,6 @@ public class GhostEffect : MonoBehaviour
 
     private bool _isTrailActive = false; // Indica si el efecto de fantasma está activo
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
     public void StartTrail()
     {
         

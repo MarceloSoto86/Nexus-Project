@@ -1,16 +1,19 @@
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
     public int _memoryMax = 100; // Valor máximo de memoria del jugador
-    public int _memorySlot = 4; // Número de slots de memoria ocupados (puede ser un valor entre 0 y 10, por ejemplo)
+    public int _memorySlot = 1; // Número de slots de memoria ocupados (puede ser un valor entre 0 y 10, por ejemplo)
     public int _currentSlot; // Número de slots de memoria actualmente ocupados (puede ser un valor entre 0 y _memorySlot)
     public int _memoryPerSlot = 25; // Cantidad de memoria que cada slot puede contener
-    public float _currentMemory; // Valor actual de memoria del jugador
+    public float _currentMemory = 25f; // Valor actual de memoria del jugador
     public float _memoryDecreaseRate; // Tasa a la que la memoria disminuye
     public float currentHealth; // Valor actual de salud del jugador
     public float maxHealth = 100; // Valor máximo de salud del jugador 
+
+    public List<string> activeCollectedItemIDs = new List<string>();
 
     public PlayerEvents _playerEvents;
     public PlayerController _playerController; // Referencia al script PlayerController para acceder a su estado y funciones
@@ -28,7 +31,9 @@ public class PlayerStatus : MonoBehaviour
         PlayerData savedData = SaveSystem.instance.LoadGame(); // Carga los datos guardados del jugador al iniciar el juego
         if (savedData != null)
         {
+            activeCollectedItemIDs = savedData.collectedItemIDs;
             _memorySlot = savedData.memoryCurrentSlotsUnlocked;
+            _currentMemory = _memorySlot * _memoryPerSlot; // Establece la memoria actual en función de los slots ocupados al cargar los datos guardados del jugador
             currentHealth = savedData.currentHealth;
 
             Vector3 loadedPosition = new Vector3(savedData.xPosition, savedData.yPosition, savedData.zPosition);
@@ -40,19 +45,16 @@ public class PlayerStatus : MonoBehaviour
                     playerRb.linearVelocity = Vector3.zero; // Detiene cualquier movimiento residual del jugador al cargar su posición
                     playerRb.angularVelocity = Vector3.zero; // Detiene cualquier rotación residual del jugador al cargar su posición
                 }
-
-                transform.position = loadedPosition; // Establece la posición del jugador a la posición guardada en los datos cargados para que el jugador comience en el mismo lugar donde guardó su progreso
-
-                Physics.SyncTransforms(); // Sincroniza las transformaciones físicas para asegurarse de que la posición del jugador se actualice correctamente en el motor de física después de cargar los datos
-
-                if (_playerController != null)
-                {
-                    _playerController.SetCheckpoint(loadedPosition); // Establece el checkpoint del jugador a la posición cargada para que el jugador reaparezca en el mismo lugar donde guardó su progreso al morir o reiniciar el juego
-                }
-                _memorySlot = savedData.memoryCurrentSlotsUnlocked;
-                _currentMemory = _memorySlot * _memoryPerSlot; // Si carga 1 slot, arranca en 25 de energía, no en 100. 
-                _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot); // Actualiza el HUD de memoria con los datos cargados del jugador para reflejar su estado de memoria actual al iniciar el juego
             }
+                transform.position = loadedPosition; // Establece la posición del jugador a la posición guardada en los datos cargados para que el jugador comience en el mismo lugar donde guardó su progreso
+                Physics.SyncTransforms(); // Sincroniza las transformaciones físicas para asegurarse de que la posición del jugador se actualice correctamente en el motor de física después de cargar los datos
+               if (_playerController != null)
+                {
+                   _playerController.SetCheckpoint(loadedPosition); // Establece el checkpoint del jugador a la posición cargada para que el jugador reaparezca en el mismo lugar donde guardó su progreso al morir o reiniciar el juego
+                }
+               _memorySlot = savedData.memoryCurrentSlotsUnlocked;
+               _currentMemory = _memorySlot * _memoryPerSlot; // Si carga 1 slot, arranca en 25 de energía, no en 100. 
+               _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot); // Actualiza el HUD de memoria con los datos cargados del jugador para reflejar su estado de memoria actual al iniciar el juego        
         }
     }
 
@@ -60,25 +62,23 @@ public class PlayerStatus : MonoBehaviour
     {
         _currentMemory -= (_memoryDecreaseRate * Time.deltaTime); // Disminuye la memoria actual según la tasa de disminución
         _currentMemory = Mathf.Clamp(_currentMemory, 0, _memoryPerSlot * _memorySlot); // Asegura que la memoria actual no exceda el máximo permitido por los slots ocupados
-                                                                                       // Mandamos los datos frescos a la antena en cada frame
         if (_playerEvents != null)
         {
             _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot);
         }
-
         if (_currentMemory <= 0)
         {
-            _currentMemory = 0; // Asegura que la memoria no sea negativa
-            
+            _currentMemory = 0; // Asegura que la memoria no sea negativa       
             _playerController.SwitchState(_playerController.dyingFromInsanityState); // Cambia al estado de muerte por locura si la memoria llega a cero
         }
-
     }
-
-    private void DynamicSlotUpdate()
+    public void AddCollectedItemID(string itemID)
     {
+        if (!activeCollectedItemIDs.Contains(itemID))
+        {
+            activeCollectedItemIDs.Add(itemID);
+        }
     }
-
     public void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount; // Resta el daño recibido a la salud del jugador
@@ -86,9 +86,7 @@ public class PlayerStatus : MonoBehaviour
         {
             currentHealth = 0f; // Asegura que la salud no sea negativa
                                 //_playerController.Respawn(); // Si la salud llega a cero o menos, el jugador reaparece en el checkpoint
-            
             _playerController.SwitchState(_playerController.dyingFromDamageState); // Cambia al estado de muerte por daño para reproducir la animación de muerte y luego reaparecer al jugador
-            
         }
         else
         {
@@ -99,13 +97,11 @@ public class PlayerStatus : MonoBehaviour
             _playerController.SwitchState(_playerController.isFlashingDamageState);
         }
     }
-
     public void ResetStatus()
     {
         currentHealth = maxHealth; // Restablece la salud del jugador al máximo
         _currentMemory = _memoryPerSlot * _memorySlot; // Restablece la memoria del jugador al máximo permitido por los slots ocupados
     }
-
     public void UnlockNextMemorySlot()
     {
         if (_memorySlot < 4)
@@ -120,10 +116,8 @@ public class PlayerStatus : MonoBehaviour
             }
         }
     }
-
     public void RestoreMemory(float amount)
     {
         _currentMemory = Mathf.Min(_currentMemory + amount, _memoryPerSlot * _memorySlot); // Restaura la memoria del jugador sin exceder el máximo permitido por los slots ocupados
     }
-
 }

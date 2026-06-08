@@ -17,10 +17,15 @@ public abstract class PlayerBaseState
         }
 
         // Dash con E y Cooldown
-        if (Input.GetKeyDown(KeyCode.E) && Time.time >= player.dashSettings.nextDashTime)
+        if (Input.GetKeyDown(KeyCode.E) && player.dashSettings.canDashInAir && Time.time >= player.dashSettings.nextDashTime)
         {
-            player.dashSettings.nextDashTime = Time.time + player.dashSettings.dashCooldown;
-            player.SwitchState(player.dashingState);
+            if (player.IsPathSafe())
+            {
+                player.dashSettings.nextDashTime = Time.time + player.dashSettings.dashCooldown;
+                player.SwitchState(player.dashingState);
+                player.dashSettings.canDashInAir = false; // Se quema el fusible hasta tocar suelo firme de nuevo
+            }
+           
         }
     }
     protected bool Move(PlayerController player)

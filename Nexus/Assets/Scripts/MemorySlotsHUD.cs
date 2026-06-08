@@ -38,10 +38,6 @@ public class MemorySlotsHUD : MonoBehaviour
 
 
     }
-    private void Start()
-    {
-        
-    }
 
     private void OnEnable()
     {
@@ -61,7 +57,7 @@ public class MemorySlotsHUD : MonoBehaviour
 
             memorySlotIcons[i].color = activeSlotColour; // Si el slot de memoria está desbloqueado, establecer su color al color de slot activo para mostrarlo como disponible para usar
 
-            float slotFloor = i * _maxPointsPerSlot; // Calcular el piso del slot de memoria actual multiplicando el índice del slot de memoria por la cantidad máxima de puntos por slot de memoria para determinar cuánta cordura se necesita para llenar completamente el slot de memoria actual
+            float slotFloor = i * _maxPointsPerSlot; // Calcular el piso del slot de memoria actual multiplicando el índice del slot de memoria por la cantidad máxima de puntos por slot de memoria para determinar cuánta cordura se necesita para llenar completamente el slot de memoria actual. i=0 -> 0, i=1 -> 25, i=2 -> 50, i=3 -> 75 i=4 -> 100
 
             if (currentSanity > slotFloor)
             {
