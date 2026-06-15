@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         previousPos = transform.position;
 
-        //checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
+        checkpointPos = transform.position; // Establece la posición inicial del jugador como el primer checkpoint
 
         currentState = idleState; // Establece el estado inicial del jugador como idle
         currentState.EnterState(this); // Llama al método EnterState del estado inicial para realizar cualquier configuración o inicialización necesaria para ese estado
