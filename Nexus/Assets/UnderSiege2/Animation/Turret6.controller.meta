@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ae358f9e8e938c545a80efd5cbe88f69
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Animation/Turret6.controller
+  uploadId: 719201

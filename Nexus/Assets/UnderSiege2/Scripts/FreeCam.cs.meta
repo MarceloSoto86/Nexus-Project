@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 719810984abd7d3418ba367321c74c6a
+timeCreated: 1475435629
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Scripts/FreeCam.cs
+  uploadId: 719201

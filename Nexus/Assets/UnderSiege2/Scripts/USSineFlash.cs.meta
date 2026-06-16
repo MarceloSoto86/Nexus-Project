@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0e56294f7ad4545489b9b3b60a8060ba
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Scripts/USSineFlash.cs
+  uploadId: 719201

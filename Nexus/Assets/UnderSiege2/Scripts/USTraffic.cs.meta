@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3a1b19f87c7a88d459050010dbe48e64
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Scripts/USTraffic.cs
+  uploadId: 719201

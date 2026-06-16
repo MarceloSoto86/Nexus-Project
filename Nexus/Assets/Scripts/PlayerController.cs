@@ -146,11 +146,19 @@ public class PlayerController : MonoBehaviour
     }
     public void Respawn()
     {
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero; // Restablece la velocidad del jugador antes de teletransportarlo al checkpoint
+            rb.angularVelocity = Vector3.zero; // Restablece la velocidad angular del jugador antes de teletransportarlo al checkpoint
+        }
         transform.position = checkpointPos; // Teletransporta al jugador a la posición del checkpoint
-        rb.linearVelocity = Vector3.zero; // Restablece la velocidad del jugador para evitar que se mantenga el impulso después de reaparecer
-        rb.angularVelocity = Vector3.zero; // Restablece la velocidad angular del jugador para evitar que gire después de reaparecer
-        rb.MovePosition(checkpointPos); // Asegura que el Rigidbody del jugador se mueva a la posición del checkpoint para evitar problemas de colisiones o física al reaparecer
+
+        Physics.SyncTransforms(); // Sincroniza la posición del Rigidbody con la posición del Transform para evitar problemas de colisiones o física al reaparecer
+
+        //rb.MovePosition(checkpointPos); // Asegura que el Rigidbody del jugador se mueva a la posición del checkpoint para evitar problemas de colisiones o física al reaparecer
         remainingJumps = maxJumps; // Restablece los saltos disponibles al reaparecer
+
+        SwitchState(idleState); // Cambia el estado del jugador a idle al reaparecer
     }  
     public IEnumerator DamageFlash()
     {

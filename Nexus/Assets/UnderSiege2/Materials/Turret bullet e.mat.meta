@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ebe9eda701a83194a8877914f25ac6ab
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Materials/Turret bullet e.mat
+  uploadId: 719201

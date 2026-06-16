@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 199ef43dc450760419cd6353eb9214ba
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Documentation.txt
+  uploadId: 719201

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ed8f3c1dc80a257428397d636618fd03
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Prefab/fuzzydust particle.prefab
+  uploadId: 719201

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ae5c38f9658b19840b1e0e5d078cfc3b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Animation/cam handled.controller
+  uploadId: 719201

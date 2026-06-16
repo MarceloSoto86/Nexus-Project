@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ed205e37e744f7146b721a416aa5bd83
+timeCreated: 1475366489
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Materials/fuzz.mat
+  uploadId: 719201

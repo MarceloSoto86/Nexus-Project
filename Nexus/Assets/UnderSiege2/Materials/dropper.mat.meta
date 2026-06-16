@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3ee6661a0516c1c479397a1ab7ec7543
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Materials/dropper.mat
+  uploadId: 719201

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4c61eb6f5fd7ccd418ee46f3556364cb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Materials/ground 2.mat
+  uploadId: 719201

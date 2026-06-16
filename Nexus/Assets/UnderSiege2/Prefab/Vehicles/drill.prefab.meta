@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ba465758b449d3342a1d0deb7d3e10ad
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262201
+  packageName: cyberpunk - Under Siege 2 (URP)
+  packageVersion: 1.0
+  assetPath: Assets/UnderSiege2/Prefab/Vehicles/drill.prefab
+  uploadId: 719201

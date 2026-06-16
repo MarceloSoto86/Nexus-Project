@@ -1,0 +1,16 @@
+Under Siege 2:
+Simple Gameplay (principled):
+- Drag and drop to your own scene prefab ground tile 1 and ground pillar 1, stored here: \UnderSiege2\Prefab\Ground  (we use these prefabs for test);
+- Put ground pillar 1 on ground tile 1;
+- Make new empty gameobject (Ctrl+Shift+N);
+- Add component USBTraffic on it;
+- Add drill spawner ship (Dropper) prefabs from \UnderSiege2\Prefab\Vehicles to vehicle array variety;
+- Right click on created gameobject - create empty;
+- Adjust direction for new (child) gameobject. Make sure this gameobject directs to tile and pillar prefabs;
+- Principled action ready. Hit play for preview.
+
+
+
+Documentation: hhttps://ilonion.com/usiegeunity2
+
+IL.ranch, 2021.

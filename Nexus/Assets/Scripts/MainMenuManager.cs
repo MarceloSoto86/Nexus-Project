@@ -14,13 +14,21 @@ public class MainMenuManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(SaveSystem.instance != null && System.IO.File.Exists(SaveSystem.instance.filePath))
+        if (continueGameButton != null)
+        { 
+
+             if(SaveSystem.instance != null && System.IO.File.Exists(SaveSystem.instance.filePath))
+             {
+                 continueGameButton.interactable = true; // Habilita el botón de "Continuar" si existe un archivo de guardado
+             }
+             else
+             {
+                 continueGameButton.interactable = false; // Deshabilita el botón de "Continuar" si no existe un archivo de guardado
+             }
+        }  
+        else 
         {
-            continueGameButton.interactable = true; // Habilita el botón de "Continuar" si existe un archivo de guardado
-        }
-        else
-        {
-            continueGameButton.interactable = false; // Deshabilita el botón de "Continuar" si no existe un archivo de guardado
+            Debug.LogWarning("Continue Game button is not assigned in the inspector.");
         }
         ChangeTab(0);
     }
