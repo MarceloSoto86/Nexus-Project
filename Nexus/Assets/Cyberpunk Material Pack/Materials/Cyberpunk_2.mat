@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Cyberpunk_2
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 6f5f846952434cc42a03b4d952efb99e, type: 2}
+  m_Parent: {fileID: 2100000, guid: 622dda6df1e51bf43bd9d484e33cb7fb, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _NORMALMAP
