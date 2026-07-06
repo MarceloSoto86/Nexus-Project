@@ -13,6 +13,8 @@ public class PlayerStatus : MonoBehaviour
     public float currentHealth; // Valor actual de salud del jugador
     public float maxHealth = 100; // Valor máximo de salud del jugador 
 
+    public bool isDashUnlocked;
+
     public List<string> activeCollectedItemIDs = new List<string>();
 
     public PlayerEvents _playerEvents;
@@ -35,6 +37,7 @@ public class PlayerStatus : MonoBehaviour
             _memorySlot = savedData.memoryCurrentSlotsUnlocked;
             _currentMemory = _memorySlot * _memoryPerSlot; // Establece la memoria actual en función de los slots ocupados al cargar los datos guardados del jugador
             currentHealth = savedData.currentHealth;
+            isDashUnlocked = savedData.dashUnlocked;
 
             Vector3 loadedPosition = new Vector3(savedData.xPosition, savedData.yPosition, savedData.zPosition);
 
@@ -46,15 +49,23 @@ public class PlayerStatus : MonoBehaviour
                     playerRb.angularVelocity = Vector3.zero; // Detiene cualquier rotación residual del jugador al cargar su posición
                 }
             }
-                transform.position = loadedPosition; // Establece la posición del jugador a la posición guardada en los datos cargados para que el jugador comience en el mismo lugar donde guardó su progreso
-                Physics.SyncTransforms(); // Sincroniza las transformaciones físicas para asegurarse de que la posición del jugador se actualice correctamente en el motor de física después de cargar los datos
-               if (_playerController != null)
+            transform.position = loadedPosition; // Establece la posición del jugador a la posición guardada en los datos cargados para que el jugador comience en el mismo lugar donde guardó su progreso
+            Physics.SyncTransforms(); // Sincroniza las transformaciones físicas para asegurarse de que la posición del jugador se actualice correctamente en el motor de física después de cargar los datos
+            if (_playerController != null)
+             {
+                  _playerController.SetCheckpoint(loadedPosition); // Establece el checkpoint del jugador a la posición cargada para que el jugador reaparezca en el mismo lugar donde guardó su progreso al morir o reiniciar el juego
+                _playerController.isDashUnlocked = savedData.dashUnlocked;
+
+                if (_playerController.dashHUDIcon != null)
                 {
-                   _playerController.SetCheckpoint(loadedPosition); // Establece el checkpoint del jugador a la posición cargada para que el jugador reaparezca en el mismo lugar donde guardó su progreso al morir o reiniciar el juego
+                    _playerController.dashHUDIcon.enabled = _playerController.isDashUnlocked;
                 }
-               _memorySlot = savedData.memoryCurrentSlotsUnlocked;
-               _currentMemory = _memorySlot * _memoryPerSlot; // Si carga 1 slot, arranca en 25 de energía, no en 100. 
-               _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot); // Actualiza el HUD de memoria con los datos cargados del jugador para reflejar su estado de memoria actual al iniciar el juego        
+
+                Debug.Log($"<color=green>[SAVE SYSTEM]: Dash restaurado desde archivo -> {_playerController.isDashUnlocked}</color>");
+            }
+            _memorySlot = savedData.memoryCurrentSlotsUnlocked;
+            _currentMemory = _memorySlot * _memoryPerSlot; // Si carga 1 slot, arranca en 25 de energía, no en 100. 
+            _playerEvents.RaiseSanityChanged(_currentMemory, _memorySlot); // Actualiza el HUD de memoria con los datos cargados del jugador para reflejar su estado de memoria actual al iniciar el juego        
         }
     }
 

@@ -17,7 +17,7 @@ public abstract class PlayerBaseState
         }
 
         // Dash con E y Cooldown
-        if (Input.GetKeyDown(KeyCode.E) && player.dashSettings.canDashInAir && Time.time >= player.dashSettings.nextDashTime)
+        if (Input.GetKeyDown(KeyCode.E) && player.isDashUnlocked && player.dashSettings.canDashInAir && Time.time >= player.dashSettings.nextDashTime)
         {
             if (player.IsPathSafe())
             {

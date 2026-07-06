@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer; // Capa que representa el suelo para el raycast
     public LayerMask dashZoneLayer; // Asignada en el Inspector a la capa "DashBoosters" o "Cables"
     public bool isDashing = false; // Indica si el jugador está actualmente realizando un dash para evitar que pueda moverse o realizar otras acciones durante el dash
+    public bool isDashUnlocked = false; // Indica si el jugador puede realizar un dash (se establece en true cuando el jugador aterriza en el suelo o después de un tiempo de enfriamiento)
     public bool isFlashingDamage = false; // Indica si el jugador está actualmente parpadeando por recibir daño
     public bool jumpPressed;
     public bool isStunned = false; // Indica si el jugador está actualmente aturdido por recibir daño
@@ -32,7 +33,8 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController player;
     public PlayerDash dashSettings; // Arrastrá el script PlayerDash aquí en el Inspector
-    
+    public UnityEngine.UI.Image dashHUDIcon;
+
     public GhostEffect ghostEffect; // Referencia al componente GhostEffect para generar el efecto fantasma al ejecutar el dash
     public PlayerBaseState currentState;
     public PlayerBaseState idleState = new PlayerIdleState();

@@ -12,4 +12,5 @@ public class PlayerData
     public float yPosition; // Variable para almacenar la posición Y del jugador, lo que permite guardar y cargar la ubicación del jugador en el mundo del juego a lo largo del progreso del jugador
     public float zPosition; // Variable para almacenar la posición Z del jugador, lo que permite guardar y cargar la ubicación del jugador en el mundo del juego a lo largo del progreso del jugador
     public List<string> collectedItemIDs = new List<string>(); // Variable para almacenar una lista de IDs de objetos recolectados por el jugador, lo que permite guardar y cargar el progreso del jugador en términos de los objetos que ha recolectado a lo largo del juego, lo que puede afectar la jugabilidad y la experiencia del jugador al interactuar con el mundo del juego y sus mecánicas relacionadas con la recolección de objetos
+    public bool dashUnlocked; // Variable para almacenar si la habilidad de dash del jugador está desbloqueada, lo que permite guardar y cargar el progreso del jugador en términos de sus habilidades y capacidades a lo largo del juego
 }

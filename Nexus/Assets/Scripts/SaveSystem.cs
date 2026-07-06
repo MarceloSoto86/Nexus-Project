@@ -4,7 +4,8 @@ using UnityEngine;
 public class SaveSystem : MonoBehaviour
 {
     public string filePath;
-    public static SaveSystem instance; 
+    public static SaveSystem instance;
+    
      private void OnEnable()
     {
         if (instance == null)
@@ -41,6 +42,7 @@ public class SaveSystem : MonoBehaviour
     public void SaveGame(PlayerStatus player)
     {
         PlayerData data = new PlayerData();
+        
         // Aquí deberías asignar los valores de tu juego a las variables de data
         data.memoryCurrentSlotsUnlocked = player._memorySlot;
         data.currentHealth = player.currentHealth;
@@ -48,30 +50,11 @@ public class SaveSystem : MonoBehaviour
         data.yPosition = player.transform.position.y;
         data.zPosition = player.transform.position.z;
         data.collectedItemIDs = player.activeCollectedItemIDs;
+        data.dashUnlocked = player._playerController.isDashUnlocked;
         string json = JsonUtility.ToJson(data,true);
         File.WriteAllText(filePath, json);
         Debug.Log("Juego guardado en: " + filePath);
     }
-
-   /* public void SaveGame()
-    {
-        if (File.Exists(filePath))
-        {
-            Debug.LogWarning("No se encontró el archivo de guardado para guardar el juego en: " + filePath);
-            return;
-        }
-        PlayerData data = new PlayerData();
-        // Aquí deberías asignar los valores de tu juego a las variables de data
-        data.memoryCurrentSlotsUnlocked = 1; // Asigna un valor predeterminado o el valor actual del juego
-        data.currentHealth = 100; // Asigna un valor predeterminado o el valor actual del juego
-        data.xPosition = 91f; // Asigna un valor predeterminado o el valor actual del juego
-        data.yPosition = 0.2f; // Asigna un valor predeterminado o el valor actual del juego
-        data.zPosition = -30f; // Asigna un valor predeterminado o el valor actual del juego
-        
-        string json = JsonUtility.ToJson(data,true);
-        File.WriteAllText(filePath, json);
-        Debug.Log("Juego guardado en: " + filePath);
-    }*/
 
     public PlayerData LoadGame()
     {
