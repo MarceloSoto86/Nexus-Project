@@ -12,6 +12,14 @@ public class PlayerDashingState : PlayerBaseState
     {
         Debug.Log("Iniciando Dash en State Machine");
         player.isDashing = true;
+        if (AudioManager.Instance != null && AudioManager.Instance.dashSFX != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.dashSFX);
+        }
+        else
+        {
+            Debug.LogWarning("AudioManager o dashSFX no está asignado.");
+        }
         _startTime = Time.time;
 
         // --- NUEVO CÁLCULO DE DIRECCIÓN (IGUAL AL MOVE) ---

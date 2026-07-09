@@ -31,25 +31,7 @@ public class PlayerFallingToLandingState : PlayerBaseState
     }
     public override void CheckSwitchState(PlayerController player)
     {
-        /* // Aquí podríamos verificar si la animación de caer a aterrizar ha terminado para cambiar al estado de idle o walking.
-         if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Falling To Landing") &&
-             player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-         {
-             // La animación ha terminado, cambiamos al estado de idle o walking según corresponda.
-             float input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).sqrMagnitude;
-
-             // Si el jugador está proporcionando input de movimiento, cambiamos al estado de walking, de lo contrario, cambiamos al estado de idle.
-             if (input > 0.01f)
-             {
-                 player.SwitchState(player.walkingState);
-             }
-             else
-             {
-                 player.SwitchState(player.idleState);
-             }
-         }*/
-
-        // Si el jugador está tocando el suelo de forma estable
+        
         if (player != null)
         {
             if (player.IsGrounded(player.rayLength))

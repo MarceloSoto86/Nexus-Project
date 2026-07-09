@@ -11,6 +11,14 @@ public class PlayerDeathFromInsanityState : PlayerBaseState
     public override void EnterState(PlayerController player)
     {
         Debug.Log("Player está en PlayerDeathFromInsanityState");
+        if (AudioManager.Instance != null && AudioManager.Instance.dyingFromInsanitySFX != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.dyingFromInsanitySFX, 0.5f); // Reproduce el efecto de sonido de muerte
+        }
+        else
+        {
+            Debug.LogWarning("AudioManager o dyingSFX no está asignado.");
+        }
         player.rb.linearVelocity = new Vector3(0f, player.rb.linearVelocity.y, 0f); // Detener el movimiento horizontal
         player.animator.CrossFade("Agony", 0.1f);
         _deathStartTime = Time.time;

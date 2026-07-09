@@ -97,6 +97,10 @@ public class SentinelDrone : MonoBehaviour
                 if (_shootingTimer >= _enemyData.attackCooldown) // Si ha pasado el intervalo de disparo
                 {
                     GameObject bullet = Instantiate(_projectilePrefab, _muzzle.position, _muzzle.rotation);
+                    if (AudioManager.Instance != null && AudioManager.Instance.centinelShotsSFX != null)
+                    {
+                        AudioManager.Instance.PlaySFX(AudioManager.Instance.centinelShotsSFX, 0.1f); // Reproduce el efecto de sonido de disparo
+                    }
                     // Configurar el proyectil con los datos del enemigo y la velocidad de disparo
                     bullet.GetComponent<Projectile>().Setup(_enemyData, _enemyData.projectileSpeed);
                     _shootingTimer = 0f; // Reiniciar el temporizador de disparo

@@ -44,7 +44,11 @@ public class Projectile : MonoBehaviour
             if (_player != null)
                 {
                     _player.TakeDamage(_enemyData.damagePoints); // Aplicar daño al jugador establecido en EnemyData (ScriptableObject) mediante la función TakeDamage del PlayerController
-                    Vector3 knockbackDirection = transform.forward; // Dirección del knockback (puede ser ajustada según tus necesidades)
+                    if (AudioManager.Instance != null && AudioManager.Instance.gettingHurtSFX != null)
+                    {
+                        AudioManager.Instance.PlaySFX(AudioManager.Instance.gettingHurtSFX, 0.1f); // Reproduce el efecto de sonido de golpe al jugador
+                }
+                Vector3 knockbackDirection = transform.forward; // Dirección del knockback (puede ser ajustada según tus necesidades)
                     float knockbackForce = _enemyData.knockbackForce;
                     _playerController.ApplyKnockback(knockbackDirection, knockbackForce);
                 }

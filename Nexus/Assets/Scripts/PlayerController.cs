@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public PlayerBaseState dyingFromInsanityState = new PlayerDeathFromInsanityState();
     public PlayerBaseState dyingFromDamageState = new PlayerDeathFromDmgState();
     public PlayerBaseState panickedFallingState = new PlayerPanickedFallingState();
+    //public RotatePlatform currentPlatform;
     public Animator animator; // Referencia al componente Animator del jugador para controlar las animaciones del jugador
  
     private Vector3 previousPos;
@@ -97,6 +98,7 @@ public class PlayerController : MonoBehaviour
     {
         raycastOrigin = transform.position + (Vector3.up * 0.5f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con suelo
         return Physics.Raycast(raycastOrigin, Vector3.down, checkDistance, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
+        //RotatePlatform platform = hit.collider.GetComponent<RotatePlatform>();
     }
 
     /* public bool IsGrounded()

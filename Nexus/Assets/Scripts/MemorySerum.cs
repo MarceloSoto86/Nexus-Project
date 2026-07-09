@@ -37,6 +37,11 @@ public class MemorySerum : MonoBehaviour
                     Instantiate(collectEffect, transform.position, Quaternion.identity); // Instancia el efecto de recolección en la posición del suero de memoria
                 }
                 playerStatus.AddCollectedItemID(uniqueID);
+
+                if (AudioManager.Instance != null && AudioManager.Instance.collectSerumSFX != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.collectSerumSFX, 0.5f); // Reproduce el efecto de sonido de recolección del suero de memoria
+                }
                 //SaveSystem.instance.SaveGame(playerStatus); // Guarda el estado del jugador después de recoger el suero de memoria
                 Destroy(gameObject); // Destruye el objeto del suero de memoria después de recogerlo
             }

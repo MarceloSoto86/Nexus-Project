@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public abstract class PlayerBaseState
@@ -30,41 +31,65 @@ public abstract class PlayerBaseState
     }
     protected bool Move(PlayerController player)
     {
-        // Obtiene la entrada del jugador para el movimiento horizontal y vertical
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        Vector3 platformVelocity = Vector3.zero; // Inicializa la velocidad de la plataforma a cero
 
-        Vector3 forwardCam = player.camTransform.forward.normalized; // Obtiene la dirección hacia adelante de la cámara
-        forwardCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
-        forwardCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
-        Vector3 rightCam = player.camTransform.right.normalized; // Obtiene la dirección hacia la derecha de la cámara
-        rightCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
-        rightCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
+        Vector3 rayOrigin = player.transform.position + (Vector3.up * 0.1f); // Ajusta el origen del rayo para que esté ligeramente por encima del jugador
+        float checkDistance = 0.3f; // Distancia para detectar el suelo
 
-        Vector3 desiredMove = forwardCam * verticalInput + rightCam * horizontalInput; // Calcula el movimiento deseado en función de la orientación de la cámara (en este caso, no se mueve)
-
-        if (!player.isStunned && !player.isDashing) // Solo permite el movimiento si el jugador no está aturdido por recibir daño
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, checkDistance, player.groundLayer, QueryTriggerInteraction.Ignore))
         {
-            if (desiredMove.magnitude > 1f) desiredMove.Normalize(); // Normaliza el movimiento deseado para mantener una velocidad constante incluso cuando se mueve en diagonal
-
-            // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
-            player.rb.linearVelocity = new Vector3(desiredMove.x * player.moveSpeed, player.rb.linearVelocity.y, desiredMove.z * player.moveSpeed);
-
-            // Rotación y retorno de "isMoving"
-            if (desiredMove != Vector3.zero)
+            RotatePlatform platform = hit.collider.GetComponent<RotatePlatform>(); // Intenta obtener el componente RotatePlatform del objeto golpeado por el rayo
+            if (platform != null)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(desiredMove); // Calcula la rotación objetivo para orientar al player hacia la dirección del movimiento
+                Vector3 distanceVector = player.transform.position - platform.transform.position; // Calcula el vector de distancia entre el jugador y la plataforma
+                distanceVector.y = 0; // Elimina la componente vertical para que solo se considere el movimiento horizontal
 
-                if (player.visualRoot != null) // Si el visualRoot no es nulo, rota el visualRoot en lugar del player para evitar problemas de colisiones
-                { 
-                    player.visualRoot.transform.rotation = Quaternion.Slerp(player.visualRoot.transform.rotation, targetRotation, player.rotationSpeed * Time.deltaTime); //Suaviza la rotación del visualRoot
-                };
-            
-                return true; // Indica que el movimiento se ha manejado y no es necesario cambiar de estado
+                Vector3 angularVelocityInRadians = platform.rotationSpeedV3 * Mathf.Deg2Rad; // Convierte la velocidad angular de grados a radianes
+                platformVelocity = Vector3.Cross(angularVelocityInRadians, distanceVector); // Calcula la velocidad de la plataforma en función de su velocidad angular y la distancia al jugador
             }
         }
-        return false; // Indica que el movimiento se ha manejado y no es necesario cambiar de estado
-    }
+
+            // Obtiene la entrada del jugador para el movimiento horizontal y vertical
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+
+            Vector3 forwardCam = player.camTransform.forward.normalized; // Obtiene la dirección hacia adelante de la cámara
+            forwardCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
+            forwardCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
+            Vector3 rightCam = player.camTransform.right.normalized; // Obtiene la dirección hacia la derecha de la cámara
+            rightCam.y = 0; // Elimina la componente vertical para que la plataforma solo se oriente en el plano horizontal
+            rightCam.Normalize(); // Normaliza la dirección para mantener una velocidad constante
+
+            Vector3 desiredMove = forwardCam * verticalInput + rightCam * horizontalInput; // Calcula el movimiento deseado en función de la orientación de la cámara (en este caso, no se mueve)
+
+        float finalX = (desiredMove.x * player.moveSpeed) + platformVelocity.x; // Calcula la velocidad final en el eje X sumando la velocidad de la plataforma
+        float finalZ = (desiredMove.z * player.moveSpeed) + platformVelocity.z; // Calcula la velocidad final en el eje Z sumando la velocidad de la plataforma
+
+        //player.rb.linearVelocity = new Vector3(finalX, player.rb.linearVelocity.y, finalZ);
+
+            if (!player.isStunned && !player.isDashing) // Solo permite el movimiento si el jugador no está aturdido por recibir daño
+            {
+                if (desiredMove.magnitude > 1f) desiredMove.Normalize(); // Normaliza el movimiento deseado para mantener una velocidad constante incluso cuando se mueve en diagonal
+
+                // Aplica el movimiento al Rigidbody del jugador multiplicando por la velocidad de movimiento para controlar la velocidad del jugador
+                player.rb.linearVelocity = new Vector3(finalX, player.rb.linearVelocity.y, finalZ);
+
+                // Rotación y retorno de "isMoving"
+                if (desiredMove != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(desiredMove); // Calcula la rotación objetivo para orientar al player hacia la dirección del movimiento
+
+                    if (player.visualRoot != null) // Si el visualRoot no es nulo, rota el visualRoot en lugar del player para evitar problemas de colisiones
+                    {
+                        player.visualRoot.transform.rotation = Quaternion.Slerp(player.visualRoot.transform.rotation, targetRotation, player.rotationSpeed * Time.deltaTime); //Suaviza la rotación del visualRoot
+                    }
+                    ;
+
+                    return true; // Indica que el movimiento se ha manejado y no es necesario cambiar de estado
+                }
+            }
+            return false; // Indica que el movimiento se ha manejado y no es necesario cambiar de estado
+     }
 
     protected void HandleFallingAndLanding(PlayerController player)
     {
@@ -89,6 +114,11 @@ public abstract class PlayerBaseState
                 Vector3 vel = player.rb.linearVelocity;
                 vel.y = 0;
                 player.rb.linearVelocity = vel;
+
+                if(AudioManager.Instance != null && AudioManager.Instance.landSFX != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.landSFX, 0.5f);
+                }
 
                 player.SwitchState(player.fallingToLandingState);
             }
