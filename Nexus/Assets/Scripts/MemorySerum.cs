@@ -30,10 +30,12 @@ public class MemorySerum : MonoBehaviour
                 if (unlockNextMemorySlot)
                 { 
                     playerStatus.UnlockNextMemorySlot(); // Desbloquea el siguiente slot de memoria
+                    PlayerEvents.RaiseMemoryStoreUnlocked();
                 }
 
                 if (collectEffect != null)
                 {
+                    
                     Instantiate(collectEffect, transform.position, Quaternion.identity); // Instancia el efecto de recolección en la posición del suero de memoria
                 }
                 playerStatus.AddCollectedItemID(uniqueID);

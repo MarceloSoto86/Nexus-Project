@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3622ef968e052034b9792ba1416c5635, type: 3}
   m_Name: Memory_4
   m_EditorClassIdentifier: Assembly-CSharp::MemoryFlashes
-  _numberID: 0
+  _numberID: 3
   _imageMemory: {fileID: 21300000, guid: f0fe5f98f1f62cf4b8d52b2e7ab64906, type: 3}
   _narrativeText: 
-  _nitidFaceImg: {fileID: 0}
+  _nitidFaceImg: {fileID: -1097842892, guid: 4efaa87adce290841bccf6125fa697fb, type: 3}
   _nitidFaceText: 
   _audioClipMemory: {fileID: 0}

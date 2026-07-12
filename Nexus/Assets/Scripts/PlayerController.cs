@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     public PlayerBaseState dyingFromInsanityState = new PlayerDeathFromInsanityState();
     public PlayerBaseState dyingFromDamageState = new PlayerDeathFromDmgState();
     public PlayerBaseState panickedFallingState = new PlayerPanickedFallingState();
-    //public RotatePlatform currentPlatform;
+  
     public Animator animator; // Referencia al componente Animator del jugador para controlar las animaciones del jugador
  
     private Vector3 previousPos;
@@ -100,17 +100,12 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(raycastOrigin, Vector3.down, checkDistance, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
         //RotatePlatform platform = hit.collider.GetComponent<RotatePlatform>();
     }
-
-    /* public bool IsGrounded()
-     {
-         raycastOrigin = transform.position + (Vector3.up * 0.5f); // Ajusta el origen del raycast ligeramente por encima del centro del jugador para evitar colisiones con suelo
-         return Physics.Raycast(raycastOrigin, Vector3.down, rayLength, groundLayer, QueryTriggerInteraction.Ignore);// Realiza un raycast hacia abajo
-     }*/
     public void CheckGroundedStatus() // Método para verificar si el jugador está en el suelo utilizando un raycast
     { 
         bool isGrounded = IsGrounded(rayLength); // Verifica si el jugador está en el suelo utilizando el método IsGrounded
         _lastimeGrounded = isGrounded ? Time.time : _lastimeGrounded; // Actualiza el último tiempo que el jugador estuvo en el suelo si está actualmente en el suelo
         Debug.DrawRay(raycastOrigin, Vector3.down * rayLength, Color.green);
+        
         // Solo reseteamos saltos, no escuchamos el espacio aquí.
         if (isGrounded && Time.time > nextGroundCheckTime)// Si el jugador está en el suelo y se ha presionado la barra espaciadora para saltar, restablece los saltos disponibles
         {
@@ -122,8 +117,7 @@ public class PlayerController : MonoBehaviour
                 // --- RECARGA DEL DASH TERRESTRE ---
                 dashSettings.canDashInAir = true;
             }
-        }  
-        
+        }      
         else
         {
             if (remainingJumps == maxJumps)
@@ -159,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
         Physics.SyncTransforms(); // Sincroniza la posición del Rigidbody con la posición del Transform para evitar problemas de colisiones o física al reaparecer
 
-        //rb.MovePosition(checkpointPos); // Asegura que el Rigidbody del jugador se mueva a la posición del checkpoint para evitar problemas de colisiones o física al reaparecer
         remainingJumps = maxJumps; // Restablece los saltos disponibles al reaparecer
 
         SwitchState(idleState); // Cambia el estado del jugador a idle al reaparecer
@@ -217,16 +210,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("¡Dash bloqueado! No hay terreno seguro debajo del jugador.");
             return false; // Si no golpea nada, el camino no es seguro
         }
-
-        /*bool hitSomething = IsGrounded(maxSafeFallDistance); // Verifica si hay algo debajo del jugador dentro de la distancia segura de caída
-
-        // 3. Si el raycast golpea algo, verifica si es un terreno seguro (puedes usar capas o tags para identificar terrenos seguros)
-        if (!hitSomething)
-        {
-           Debug.Log("¡Dash bloqueado! No hay terreno seguro debajo del jugador.");
-            return false; // Si no golpea nada, el camino no es seguro
-        }
-        return true; // Si golpea algo, el camino es seguro*/
     }
     IEnumerator StunPlayerRoutine(Vector3 knockbackDirection, float knockbackForce)
     {

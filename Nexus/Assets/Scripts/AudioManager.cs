@@ -18,10 +18,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip centinelShotsSFX;
     public AudioClip securityAlarmSFX;
     public AudioClip gettingHurtSFX;
+    public AudioClip dyingSFX;
     public AudioClip dyingFromInsanitySFX;
     public AudioClip acidSettingSFX;
     public AudioClip flyingDroneSFX;
     public AudioClip metalMillSFX;
+
+    [Header("Nuevos Sonidos de Feedback")]
+    public AudioClip footstepSFX;
+    public AudioClip acidDeathSFX;
 
     private void Awake()
     {
@@ -41,7 +46,7 @@ public class AudioManager : MonoBehaviour
         if (musicSource != null && bgmMusic != null)
         {
 
-            bgmMusic = Resources.Load<AudioClip>("Audio/BGM/BackgroundMusic");
+            //bgmMusic = Resources.Load<AudioClip>("Audio/BGM/BackgroundMusic");
             musicSource.clip = bgmMusic;
             musicSource.loop = true;
             musicSource.Play();

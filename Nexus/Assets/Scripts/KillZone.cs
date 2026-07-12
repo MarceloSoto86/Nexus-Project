@@ -10,6 +10,11 @@ public class KillZone : MonoBehaviour
         {
             if( PlayerController.player != null) // Verifica que la referencia al jugador no sea nula antes de intentar acceder a ella
             {
+
+                if (AudioManager.Instance != null && AudioManager.Instance.acidDeathSFX != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.acidDeathSFX);
+                }
                 PlayerController.player.Respawn(); // Llama al método Teleport del jugador para teletransportarlo al checkpoint
                 PlayerStatus _status = PlayerController.player.GetComponentInParent<PlayerStatus>();
                 if(_status != null) // Verifica que el componente PlayerStatus no sea nulo antes de intentar acceder a él_status

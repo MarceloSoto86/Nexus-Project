@@ -2325,7 +2325,7 @@ AudioSource:
   m_GameObject: {fileID: 178601198}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2839400061390695529, guid: c94da3086fe32d846a3631a451b64f02, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 56f8ca732cfca49d3b379f4aa575c786, type: 3}
   m_PlayOnAwake: 1
@@ -7244,8 +7244,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1952038035}
-  - {fileID: 1223504774}
   - {fileID: 814251966}
+  - {fileID: 1974118821}
   m_Father: {fileID: 1822565639}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -25041,81 +25041,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5745920699036507943, guid: 7fd93b896774de94c9ed6633290c028d, type: 3}
   m_PrefabInstance: {fileID: 1358296377}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1223504773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1223504774}
-  - component: {fileID: 1223504776}
-  - component: {fileID: 1223504775}
-  m_Layer: 5
-  m_Name: FaceMemoryHUD
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1223504774
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223504773}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 598149063}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -348, y: -220}
-  m_SizeDelta: {x: -720, y: -464}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1223504775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223504773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1223504776
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223504773}
-  m_CullTransparentMesh: 1
 --- !u!1 &1234807064
 GameObject:
   m_ObjectHideFlags: 0
@@ -31297,7 +31222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryManager
   _displayImageUI: {fileID: 1510715953}
-  _faceHUDImageUI: {fileID: 1223504775}
+  _faceHUDImageUI: {fileID: 0}
   _textMeshPro: {fileID: 1798259539}
   _canvasGroup: {fileID: 1674320538}
   fadeInDuration: 1
@@ -34273,6 +34198,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952038034}
   m_CullTransparentMesh: 1
+--- !u!1 &1974118820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1974118821}
+  - component: {fileID: 1974118824}
+  - component: {fileID: 1974118823}
+  - component: {fileID: 1974118822}
+  m_Layer: 5
+  m_Name: FaceHUDMgr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1974118821
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974118820}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 598149063}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 75, y: 125}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1974118822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974118820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1974118823
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974118820}
+  m_CullTransparentMesh: 1
+--- !u!114 &1974118824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974118820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814afd90c833af14f9cc1644d3220314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDMemoryFaceMgr
+  currentHUDFace: {fileID: 1974118822}
+  faceDataSO:
+  - {fileID: 11400000, guid: 6bf8afdb0c19cee4995a66302d3d045e, type: 2}
+  - {fileID: 11400000, guid: ef1daf680e89c104aa33ed57558e14df, type: 2}
+  - {fileID: 11400000, guid: e24ed77dd18916c449daf23e68d7795c, type: 2}
+  - {fileID: 11400000, guid: 57aebcc4b4d48d24a87c59898f25eceb, type: 2}
+  faceCount: 0
 --- !u!4 &1978864341 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 63725443279939366, guid: a6c78b67b6ca22a45b8ff622781849ff, type: 3}
@@ -41786,18 +41806,21 @@ MonoBehaviour:
   musicSource: {fileID: 178601200}
   sfxSource: {fileID: 2116223564}
   bgmMusic: {fileID: 8300000, guid: 56f8ca732cfca49d3b379f4aa575c786, type: 3}
-  dashSFX: {fileID: 0}
-  jumpSFX: {fileID: 0}
+  dashSFX: {fileID: 8300000, guid: 201cfd6b00d124092b0f9810e5699d90, type: 3}
+  jumpSFX: {fileID: 8300000, guid: 7cf3f6d04eece8d40a5195f7a4bc2d78, type: 3}
   landSFX: {fileID: 0}
   collectSerumSFX: {fileID: 8300000, guid: 0ae4a20a1902842349712242a032c8ab, type: 3}
   memoryTriggeredSFX: {fileID: 8300000, guid: 1d2f819522b894766ac9c4323f9d79ac, type: 3}
   centinelShotsSFX: {fileID: 8300000, guid: 201cfd6b00d124092b0f9810e5699d90, type: 3}
   securityAlarmSFX: {fileID: 8300000, guid: c47edbdb9091d44adb2992d743c34909, type: 3}
   gettingHurtSFX: {fileID: 8300000, guid: e5f93a5297603479283f5159748502b0, type: 3}
+  dyingSFX: {fileID: 8300000, guid: f0db07acd4058cf4d80ab30af3bef79d, type: 3}
   dyingFromInsanitySFX: {fileID: 8300000, guid: 149caefbcaf1d4cefaad17d5e77a3b18, type: 3}
-  acidSettingSFX: {fileID: 0}
-  flyingDroneSFX: {fileID: 0}
+  acidSettingSFX: {fileID: 8300000, guid: bd15425e06d24d14a9af497391f4719b, type: 3}
+  flyingDroneSFX: {fileID: 8300000, guid: f159aa2faac70ad498f3401c1215bed2, type: 3}
   metalMillSFX: {fileID: 0}
+  footstepSFX: {fileID: 8300000, guid: dfff2b3c7dfb43c419592789f0a6ab81, type: 3}
+  acidDeathSFX: {fileID: 8300000, guid: 7fb5b6f8e89e3a54e87d54261a3e6bd0, type: 3}
 --- !u!82 &2116223564
 AudioSource:
   m_ObjectHideFlags: 0
@@ -41807,7 +41830,7 @@ AudioSource:
   m_GameObject: {fileID: 2116223560}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 912165245208269224, guid: c94da3086fe32d846a3631a451b64f02, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f2183a39c3aa24cb9b21f5e581adaf3a, type: 3}
   m_PlayOnAwake: 1

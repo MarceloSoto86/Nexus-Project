@@ -123,7 +123,7 @@ public class PlayerStatus : MonoBehaviour
             // Invocación a través de la arquitectura de eventos limpia
             if (_playerEvents != null)
             {
-                _playerEvents.RaiseMemoryStoreUnlocked();
+                PlayerEvents.RaiseMemoryStoreUnlocked(); 
             }
         }
     }

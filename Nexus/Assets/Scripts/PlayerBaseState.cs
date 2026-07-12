@@ -14,6 +14,10 @@ public abstract class PlayerBaseState
         // Detección de salto
         if (Input.GetKeyDown(KeyCode.Space) && player.remainingJumps > 0)
         {
+            if (AudioManager.Instance != null && AudioManager.Instance.jumpSFX != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.jumpSFX);
+            }
             player.SwitchState(player.jumpingState); // El JumpingState se encargará del resto
         }
 

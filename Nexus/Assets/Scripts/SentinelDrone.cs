@@ -46,6 +46,14 @@ public class SentinelDrone : MonoBehaviour
                     }
                     Vector3 targetPoint = waypointList[_currentWaypointIndex].position; // Obtener el punto de patrulla actual
                     transform.position = Vector3.MoveTowards(transform.position, targetPoint, _rotationSpeed * Time.deltaTime); // Mover el dron hacia el punto de patrulla
+                    if (AudioManager.Instance != null && AudioManager.Instance.flyingDroneSFX != null)
+                    {
+                        AudioManager.Instance.PlaySFX(AudioManager.Instance.flyingDroneSFX, 0.5f); // Reproduce el efecto de sonido del dron volando
+                    }
+                    else
+                    {
+                        Debug.LogWarning("AudioManager o flyingDroneSFX no está asignado.");
+                    }
                     if (Vector3.Distance(transform.position, targetPoint) < 0.2f) // Si el dron ha llegado al punto de patrulla
                     {
                         _currentWaypointIndex = (_currentWaypointIndex + 1) % waypointList.Length; // Avanzar al siguiente punto de patrulla

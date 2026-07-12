@@ -35,7 +35,7 @@ public class PlayerEvents : MonoBehaviour
         OnSanityChanged?.Invoke(currentSanity, unlockedSlots);
     }
 
-    public void RaiseMemoryStoreUnlocked()
+    public static void RaiseMemoryStoreUnlocked()
     {
         OnMemoryStoreUnlocked?.Invoke();
     }

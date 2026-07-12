@@ -13,6 +13,7 @@ public class PlayerDeathFromInsanityState : PlayerBaseState
         Debug.Log("Player está en PlayerDeathFromInsanityState");
         if (AudioManager.Instance != null && AudioManager.Instance.dyingFromInsanitySFX != null)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.dyingSFX, 0.5f); // Reproduce el efecto de sonido de muerte
             AudioManager.Instance.PlaySFX(AudioManager.Instance.dyingFromInsanitySFX, 0.5f); // Reproduce el efecto de sonido de muerte
         }
         else
