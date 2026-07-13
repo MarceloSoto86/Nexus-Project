@@ -10,7 +10,7 @@ public class PlayerDashingState : PlayerBaseState
 
     public override void EnterState(PlayerController player)
     {
-        Debug.Log("Iniciando Dash en State Machine");
+        //Debug.log("Iniciando Dash en State Machine");
         player.isDashing = true;
         if (AudioManager.Instance != null && AudioManager.Instance.dashSFX != null)
         {
@@ -18,7 +18,7 @@ public class PlayerDashingState : PlayerBaseState
         }
         else
         {
-            Debug.LogWarning("AudioManager o dashSFX no está asignado.");
+            //Debug.logWarning("AudioManager o dashSFX no está asignado.");
         }
         _startTime = Time.time;
 
@@ -58,7 +58,7 @@ public class PlayerDashingState : PlayerBaseState
         }
         else
         {
-            Debug.LogWarning("Animación 'a_Dashing' no encontrada. Se usará el GhostEffect como feedback principal.");
+            //Debug.logWarning("Animación 'a_Dashing' no encontrada. Se usará el GhostEffect como feedback principal.");
         }
     }
     public override void UpdateState(PlayerController player)

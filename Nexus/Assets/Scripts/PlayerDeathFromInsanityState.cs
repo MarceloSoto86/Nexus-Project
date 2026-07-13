@@ -10,7 +10,7 @@ public class PlayerDeathFromInsanityState : PlayerBaseState
     private bool _hasCollapsed = true;
     public override void EnterState(PlayerController player)
     {
-        Debug.Log("Player está en PlayerDeathFromInsanityState");
+        //Debug.log("Player está en PlayerDeathFromInsanityState");
         if (AudioManager.Instance != null && AudioManager.Instance.dyingFromInsanitySFX != null)
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.dyingSFX, 0.5f); // Reproduce el efecto de sonido de muerte
@@ -18,7 +18,7 @@ public class PlayerDeathFromInsanityState : PlayerBaseState
         }
         else
         {
-            Debug.LogWarning("AudioManager o dyingSFX no está asignado.");
+            //Debug.logWarning("AudioManager o dyingSFX no está asignado.");
         }
         player.rb.linearVelocity = new Vector3(0f, player.rb.linearVelocity.y, 0f); // Detener el movimiento horizontal
         player.animator.CrossFade("Agony", 0.1f);

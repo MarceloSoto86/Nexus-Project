@@ -10,8 +10,8 @@ public class VictoryTrigger : MonoBehaviour
         //Verificamos si el objeto que ha entrado en el trigger es el jugador
         if (other.CompareTag("Player"))
         {
-            Debug.Log("<color=green>¡VICTORIA REAL ACTIVADA!</color>");
-            Debug.Log("Player has reached the victory trigger!");
+            //Debug.log("<color=green>¡VICTORIA REAL ACTIVADA!</color>");
+            //Debug.log("Player has reached the victory trigger!");
 
 
             // Invocamos el evento de victoria del jugador si hay suscriptores

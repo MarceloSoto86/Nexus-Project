@@ -59,7 +59,7 @@ public class PlatformController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Ojo: No hay MeshRenderer en " + gameObject.name + ", pero la secuencia sigue.");
+            //Debug.logWarning("Ojo: No hay MeshRenderer en " + gameObject.name + ", pero la secuencia sigue.");
         }
         if (platformCollider != null)
         {
@@ -67,7 +67,7 @@ public class PlatformController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Ojo: No hay Collider en " + gameObject.name + ", pero la secuencia sigue.");
+            //Debug.logWarning("Ojo: No hay Collider en " + gameObject.name + ", pero la secuencia sigue.");
         }
         StartCoroutine(ReappearSequence()); // Inicia la secuencia de reaparecer la plataforma
         //Destroy(gameObject); // Destruye la plataforma
@@ -92,7 +92,7 @@ public class PlatformController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Ojo: No hay MeshRenderer en " + gameObject.name + ", pero la secuencia sigue.");
+            //Debug.logWarning("Ojo: No hay MeshRenderer en " + gameObject.name + ", pero la secuencia sigue.");
         }
         if (platformCollider != null)
         {
@@ -100,7 +100,7 @@ public class PlatformController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Ojo: No hay Collider en " + gameObject.name + ", pero la secuencia sigue.");
+            //Debug.logWarning("Ojo: No hay Collider en " + gameObject.name + ", pero la secuencia sigue.");
         }
         if (mp != null) mp.enabled = true;  // Al estar ya en la posición inicial
         isActivated = false; // Restablece el estado de activación para permitir que la plataforma se active nuevamente

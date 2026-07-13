@@ -24,7 +24,7 @@ public class HUDIcons : MonoBehaviour
         dashIcon.color = readyColor; // Establece el color del icono de dash al color de listo al iniciar el juego para indicar que el dash está disponible para usar
         //dashIcon = GetComponent<Image>(); // Obtiene la referencia al componente Image del icono de dash para poder cambiar su color en función del estado del dash
         playerDash = Object.FindFirstObjectByType<PlayerDash>(); // Encuentra la instancia del script PlayerDash en la escena para acceder a su estado de enfriamiento del dash
-        _playerStatus = PlayerController.player.GetComponent<PlayerStatus>(); // Obtiene la referencia al script PlayerStatus del jugador para acceder a su estado de salud y memoria
+        //_playerStatus = PlayerController.player.GetComponent<PlayerStatus>(); // Obtiene la referencia al script PlayerStatus del jugador para acceder a su estado de salud y memoria
         _memoryFillImage = _memoryIndicatorSlider.fillRect.GetComponent<Image>(); // Obtiene la referencia al componente Image del relleno del slider de memoria para cambiar su color en función del estado de memoria del jugador
 
     }

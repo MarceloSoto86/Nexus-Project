@@ -16,7 +16,7 @@ public class CinemachineZone : MonoBehaviour
         {
             //cinemachineCamera.Priority += 10; // Aumenta la prioridad de la cámara para que se active
             cinemachineCamera.Priority = activePriority; // Establece la prioridad de la cámara a un valor específico para activarla
-            Debug.Log($"Cámara {cinemachineCamera.name} activada.");
+            //Debug.log($"Cámara {cinemachineCamera.name} activada.");
         }
         Debug.DrawRay(transform.position, Vector3.up * 5, Color.red, 2f);
     }
@@ -27,7 +27,7 @@ public class CinemachineZone : MonoBehaviour
         {
             //cinemachineCamera.Priority -= 10; // Restaura la prioridad de la cámara para que se desactive
             cinemachineCamera.Priority = inactivePriority; // Establece la prioridad de la cámara a un valor específico para desactivarla
-            Debug.Log($"Cámara {cinemachineCamera.name} en espera.");
+            //Debug.log($"Cámara {cinemachineCamera.name} en espera.");
         }
     }
 

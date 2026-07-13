@@ -4,7 +4,7 @@ public class PlayerJumpingState : PlayerBaseState
 {
    public override void EnterState(PlayerController player)
     {
-        Debug.Log("Player est� en Jumping State");
+        //Debug.log("Player est� en Jumping State");
         player.remainingJumps--;
 
         // Antes de aplicar la fuerza de salto, restablece la velocidad vertical del jugador a cero para evitar que el salto se vea afectado por la velocidad actual

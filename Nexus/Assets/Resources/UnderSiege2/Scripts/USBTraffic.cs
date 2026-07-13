@@ -46,7 +46,7 @@ namespace ILranch
             }
             else
             {
-                Debug.Log(" <color=yellow> No traffic spawn points! </color>");
+                //Debug.log(" <color=yellow> No traffic spawn points! </color>");
                 locked = true;
                 return;
             }
@@ -78,7 +78,7 @@ namespace ILranch
         // Update is called once per frame
         void Update()
         {
-            //Debug.Log("drp: " + DroppersCount + "  drl: " + DrillsCount + "  drl prtcls: " + DrillsPrtclsCount);
+            ////Debug.log("drp: " + DroppersCount + "  drl: " + DrillsCount + "  drl prtcls: " + DrillsPrtclsCount);
         }
 
         IEnumerator SpawnInterval(float rTime)
@@ -103,7 +103,7 @@ namespace ILranch
                         }
                         else
                         {
-                            Debug.Log(" <color=yellow> Wrong vehicle! 'USBDropper' script is required </color>");
+                            //Debug.log(" <color=yellow> Wrong vehicle! 'USBDropper' script is required </color>");
                             locked = true;
                             break;
                         }

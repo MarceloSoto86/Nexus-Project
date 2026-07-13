@@ -57,6 +57,6 @@ public class PauseManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit(); // Cierra la aplicación del juego cuando se llama a este método, lo que es útil para proporcionar una opción de salida al jugador desde el menú de pausa o cualquier otro lugar del juego donde se desee permitir que el jugador salga del juego.
-        Debug.Log("Quit Game"); // Imprime un mensaje en la consola para indicar que se ha llamado al método QuitGame, lo que puede ser útil para depuración o para confirmar que la función de salida del juego se ha activado correctamente.
+        //Debug.log("Quit Game"); // Imprime un mensaje en la consola para indicar que se ha llamado al método QuitGame, lo que puede ser útil para depuración o para confirmar que la función de salida del juego se ha activado correctamente.
     }
 }

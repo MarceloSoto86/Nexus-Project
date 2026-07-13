@@ -14,7 +14,7 @@ public class CameraZone : MonoBehaviour
             {
                 cameraController.ChangeView(offsetNode, rotationNode);
             }
-            Debug.Log("Cámara cambiada!");
+            //Debug.log("Cámara cambiada!");
         }
     }
 

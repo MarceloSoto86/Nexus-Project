@@ -27,7 +27,7 @@ public class PlayerEvents : MonoBehaviour
             SaveSystem.instance.SaveGame(status); // Guarda el progreso del jugador al alcanzar un nuevo punto de control
         }
        
-        Debug.Log("Evento lanzado: " + checkpointHeight);
+        //Debug.log("Evento lanzado: " + checkpointHeight);
     }
     // --- MÉTODOS DISPARADORES PARA EL STATUS ---
     public void RaiseSanityChanged(float currentSanity, int unlockedSlots)

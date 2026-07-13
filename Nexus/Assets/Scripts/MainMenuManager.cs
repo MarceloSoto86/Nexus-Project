@@ -28,7 +28,7 @@ public class MainMenuManager : MonoBehaviour
         }  
         else 
         {
-            Debug.LogWarning("Continue Game button is not assigned in the inspector.");
+            //Debug.logWarning("Continue Game button is not assigned in the inspector.");
         }
         ChangeTab(0);
     }
@@ -59,17 +59,17 @@ public class MainMenuManager : MonoBehaviour
                if (settingsContent[i].name == "AudioContent")
                 {
                     // Aquí puedes agregar código específico para configurar los controles de audio, como ajustar el volumen o mostrar opciones relacionadas con el audio.
-                    Debug.Log("Audio Settings tab selected");
+                    //Debug.log("Audio Settings tab selected");
                 }
                else if (settingsContent[i].name == "GraphicsContent")
                 {
                     // Aquí puedes agregar código específico para configurar los controles de video, como ajustar la resolución o mostrar opciones relacionadas con el video.
-                    Debug.Log("Video Settings tab selected");
+                    //Debug.log("Video Settings tab selected");
                 }
                 else if (settingsContent[i].name == "GameContent")
                 {
                     // Aquí puedes agregar código específico para configurar los controles de juego, como asignar teclas o mostrar opciones relacionadas con los controles.
-                    Debug.Log("Controls Settings tab selected");
+                    //Debug.log("Controls Settings tab selected");
                 }
             }
             else
@@ -97,12 +97,12 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No saved game found. Please start a new game.");
+            //Debug.logWarning("No saved game found. Please start a new game.");
         }
     }
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("Quit Game");
+        //Debug.log("Quit Game");
     }
 }

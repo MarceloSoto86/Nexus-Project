@@ -93,22 +93,22 @@ public class MemoryManager : MonoBehaviour
     {
         if(data == null || data._nitidFaceImg == null || data._imageMemory == null)
         {
-            Debug.LogWarning("MemoryFlashes data is null. Cannot play memory.");
+            //Debug.logWarning("MemoryFlashes data is null. Cannot play memory.");
             return; // Sale del método si el ScriptableObject es nulo para evitar errores.
         }
         _displayImageUI.sprite = data._imageMemory; // Asigna la imagen del recuerdo a la variable spriteToShow para mostrarla en el HUD.
         //spriteToShow.sprite = data.memorySprite; // Cambia el sprite de la imagen del recuerdo al sprite especificado en el ScriptableObject.
-        Debug.Log("Playing memory: " + _displayImageUI.sprite.name); // Imprime el nombre del sprite en la consola para verificar que se está reproduciendo el recuerdo correcto.
+        //Debug.log("Playing memory: " + _displayImageUI.sprite.name); // Imprime el nombre del sprite en la consola para verificar que se está reproduciendo el recuerdo correcto.
     }
 
     public void ChangeFaceNitid(MemoryFlashes data)
     {
         if(data == null || data._nitidFaceImg == null)
         {
-            Debug.LogWarning("MemoryFlashes data is null. Cannot change face nitid.");
+            //Debug.logWarning("MemoryFlashes data is null. Cannot change face nitid.");
             return; // Sale del método si el ScriptableObject es nulo para evitar errores.
         }
         _faceHUDImageUI.sprite = data._nitidFaceImg; // Cambia la imagen del HUD de la cara nitida a la imagen del recuerdo que se acaba de mostrar.
-        Debug.Log("Cara nitida desbloqueada!"); // Imprime un mensaje en la consola para verificar que se ha desbloqueado la cara nitida.
+        //Debug.log("Cara nitida desbloqueada!"); // Imprime un mensaje en la consola para verificar que se ha desbloqueado la cara nitida.
     }
 }

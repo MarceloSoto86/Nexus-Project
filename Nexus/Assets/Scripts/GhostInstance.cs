@@ -24,7 +24,7 @@ public class GhostInstance : MonoBehaviour
     {
         if (_meshRenderer == null)
         {
-            Debug.LogWarning("MeshRenderer no asignado en GhostEffect.");
+            //Debug.logWarning("MeshRenderer no asignado en GhostEffect.");
             return;
         }
         else

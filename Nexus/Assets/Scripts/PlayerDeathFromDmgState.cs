@@ -7,7 +7,7 @@ public class PlayerDeathFromDmgState : PlayerBaseState
     //public PlayerController playerController; // Referencia al PlayerController para acceder a sus métodos y variables
     public override void EnterState(PlayerController player)
     {
-        Debug.Log("Player está en Dying from Damage State");
+        //Debug.log("Player está en Dying from Damage State");
         if (AudioManager.Instance != null && AudioManager.Instance.dyingSFX != null)
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.dyingSFX, 0.5f); // Reproduce el efecto de sonido de muerte
@@ -15,7 +15,7 @@ public class PlayerDeathFromDmgState : PlayerBaseState
         }
         else
         {
-            Debug.LogWarning("AudioManager o dyingSFX no está asignado.");
+            //Debug.logWarning("AudioManager o dyingSFX no está asignado.");
         }
         player.rb.linearVelocity = new Vector3(0f, player.rb.linearVelocity.y, 0f); // Detener el movimiento horizontal
         player.animator.CrossFade("Dying_from_damage", 0.1f);

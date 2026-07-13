@@ -41,7 +41,7 @@ namespace ILranch
         // Update is called once per frame
         void Update()
         {
-            //Debug.Log(this.gameObject.transform.position);
+            ////Debug.log(this.gameObject.transform.position);
         }
 
         void CheckHabitat()

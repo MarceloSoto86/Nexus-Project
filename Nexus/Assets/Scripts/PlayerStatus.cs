@@ -61,7 +61,7 @@ public class PlayerStatus : MonoBehaviour
                     _playerController.dashHUDIcon.enabled = _playerController.isDashUnlocked;
                 }
 
-                Debug.Log($"<color=green>[SAVE SYSTEM]: Dash restaurado desde archivo -> {_playerController.isDashUnlocked}</color>");
+                //Debug.log($"<color=green>[SAVE SYSTEM]: Dash restaurado desde archivo -> {_playerController.isDashUnlocked}</color>");
             }
             _memorySlot = savedData.memoryCurrentSlotsUnlocked;
             _currentMemory = _memorySlot * _memoryPerSlot; // Si carga 1 slot, arranca en 25 de energía, no en 100. 

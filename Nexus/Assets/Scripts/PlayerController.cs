@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         if (animator != null && animator.runtimeAnimatorController != null)
         {
             var info = animator.GetCurrentAnimatorStateInfo(0);
-            // Debug.Log("Animación actual en ejecución: " + info.shortNameHash);
+            // //Debug.log("Animación actual en ejecución: " + info.shortNameHash);
 
         }
         // DEBUG DE ANIMACIÓN
@@ -84,12 +84,12 @@ public class PlayerController : MonoBehaviour
         {
             if (animator != null)
             {
-                Debug.Log("Intentando forzar Idle manualmente...");
+                //Debug.log("Intentando forzar Idle manualmente...");
                 animator.Play("a_Idle");
             }
             else
             {
-                Debug.LogError("¡El componente Animator no está asignado!");
+                //Debug.logError("¡El componente Animator no está asignado!");
             }
         }
     }
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("¡Dash bloqueado! No hay terreno seguro debajo del jugador.");
+            //Debug.log("¡Dash bloqueado! No hay terreno seguro debajo del jugador.");
             return false; // Si no golpea nada, el camino no es seguro
         }
     }

@@ -31,7 +31,7 @@ namespace ILranch
             }
             else
             {
-                Debug.Log(" <color=yellow> No drop points! </color>");
+                //Debug.log(" <color=yellow> No drop points! </color>");
                 locked = true;
                 return;
             }
@@ -43,7 +43,7 @@ namespace ILranch
 
             if (!DropObject.GetComponent<USBDrill>())
             {
-                Debug.Log(" <color=yellow> wrong drill object! (USBDrill.cs is required) </color>");
+                //Debug.log(" <color=yellow> wrong drill object! (USBDrill.cs is required) </color>");
                 locked = true;
                 return;
             }
@@ -84,7 +84,7 @@ namespace ILranch
                         USBTrafficLink.DrillsCount++;
                     }
                     IsDropped = true;
-                    //Debug.Log("dropper: ground detected");
+                    ////Debug.log("dropper: ground detected");
                 }
             }
             if (!IsDropped)

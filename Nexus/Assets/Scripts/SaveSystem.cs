@@ -33,7 +33,7 @@ public class SaveSystem : MonoBehaviour
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
-                Debug.Log(" ¡Archivo de guardado eliminado con éxito! Reiniciá el juego.");
+                //Debug.log(" ¡Archivo de guardado eliminado con éxito! Reiniciá el juego.");
             }
         }
     }
@@ -53,7 +53,7 @@ public class SaveSystem : MonoBehaviour
         data.dashUnlocked = player._playerController.isDashUnlocked;
         string json = JsonUtility.ToJson(data,true);
         File.WriteAllText(filePath, json);
-        Debug.Log("Juego guardado en: " + filePath);
+        //Debug.log("Juego guardado en: " + filePath);
     }
 
     public PlayerData LoadGame()
@@ -63,12 +63,12 @@ public class SaveSystem : MonoBehaviour
             string json = File.ReadAllText(filePath);
             PlayerData data = JsonUtility.FromJson<PlayerData>(json);
             // Aquí deberías asignar los valores de data a tu juego
-            Debug.Log("Juego cargado desde: " + filePath);
+            //Debug.log("Juego cargado desde: " + filePath);
             return data;
         }
         else
         {
-            Debug.LogWarning("No se encontró el archivo de guardado en: " + filePath);
+            //Debug.logWarning("No se encontró el archivo de guardado en: " + filePath);
         }
         return null;
     }
@@ -78,11 +78,11 @@ public class SaveSystem : MonoBehaviour
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
-            Debug.Log("Archivo de guardado eliminado con éxito.");
+            //Debug.log("Archivo de guardado eliminado con éxito.");
         }
         else
         {
-            Debug.LogWarning("No se encontró el archivo de guardado para eliminar en: " + filePath);
+            //Debug.logWarning("No se encontró el archivo de guardado para eliminar en: " + filePath);
         }
     }
 }

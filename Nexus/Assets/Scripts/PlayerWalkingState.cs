@@ -8,7 +8,7 @@ public class PlayerWalkingState : PlayerBaseState
     public bool isMoving; // Indica si el jugador está actualmente moviéndose para controlar la animación de movimiento
     public override void EnterState(PlayerController player)
     {
-               Debug.Log("Player está en Walking State");
+               //Debug.log("Player está en Walking State");
        player.animator.CrossFade("a_Walking", 0.1f); // Reproduce la animación de caminar con una transición suave.
     }
     public override void UpdateState(PlayerController player)

@@ -26,7 +26,7 @@ public class VictoryHUD : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Victory Panel is not assigned in the inspector.");
+            //Debug.logWarning("Victory Panel is not assigned in the inspector.");
         }
     }
 

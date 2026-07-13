@@ -41,7 +41,7 @@ public class SentinelDrone : MonoBehaviour
                 {
                     if (waypointList == null || waypointList.Length == 0)
                     {
-                        Debug.LogWarning($"[SentinelDrone] {gameObject.name} no tiene Waypoints asignados en el Inspector.");
+                        //Debug.logWarning($"[SentinelDrone] {gameObject.name} no tiene Waypoints asignados en el Inspector.");
                         return; // Corta el frame aquí para evitar que se ejecute la línea 41 dañada
                     }
                     Vector3 targetPoint = waypointList[_currentWaypointIndex].position; // Obtener el punto de patrulla actual
@@ -52,7 +52,7 @@ public class SentinelDrone : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("AudioManager o flyingDroneSFX no está asignado.");
+                        //Debug.logWarning("AudioManager o flyingDroneSFX no está asignado.");
                     }
                     if (Vector3.Distance(transform.position, targetPoint) < 0.2f) // Si el dron ha llegado al punto de patrulla
                     {

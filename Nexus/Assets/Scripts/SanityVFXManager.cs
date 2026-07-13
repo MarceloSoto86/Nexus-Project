@@ -18,7 +18,7 @@ public class SanityVFXManager : MonoBehaviour
     {
         if (globalVolume == null)
         {
-            Debug.LogError("Global Volume no asignado en SanityVFXManager.");
+            //Debug.logError("Global Volume no asignado en SanityVFXManager.");
             return;
         }
         if (globalVolume != null && globalVolume.profile.TryGet(out chromaticAberrationEffect))

@@ -32,7 +32,7 @@ public class MovingPlatform : MonoBehaviour
     private void MovePlatform()
     {
         float distance = Vector3.Distance(platMove.position, currentTarget.position);
-        //Debug.Log("Distancia: " + distance);
+        ////Debug.log("Distancia: " + distance);
         
         if (distance < 0.1f)
         {

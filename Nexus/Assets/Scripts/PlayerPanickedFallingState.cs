@@ -4,7 +4,7 @@ public class PlayerPanickedFallingState : PlayerBaseState
 {
     public override void EnterState(PlayerController player)
     {
-       Debug.Log("Player has entered the Panicked Falling State.");
+       //Debug.log("Player has entered the Panicked Falling State.");
         player.animator.CrossFade("Panicked_Falling", 0.1f);
     }
 

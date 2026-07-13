@@ -4,7 +4,7 @@ public class PlayerIdleState : PlayerBaseState
 {
     public override void EnterState(PlayerController player)
     {
-        Debug.Log("Player está en Idle State");
+        //Debug.log("Player está en Idle State");
         
         // FRENADO QUIRÚRGICO: 
         // Mantenemos la velocidad en Y (por si aterrizó de un salto) 

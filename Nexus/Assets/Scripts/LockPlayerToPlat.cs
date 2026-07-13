@@ -30,7 +30,7 @@ public class LockPlayerToPlat : MonoBehaviour
     private void PlayerLock()
     {
        
-            //Debug.Log("Player movido con la plataforma");
+            ////Debug.log("Player movido con la plataforma");
             Vector3 platformMovement = transform.position - lastPlatformPosition; // Calcula el movimiento de la plataforma desde el último frame
         if (lockPlayer && player != null)
         {
@@ -44,7 +44,7 @@ public class LockPlayerToPlat : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-           // Debug.Log("Player en contacto con la plataforma");
+           // //Debug.log("Player en contacto con la plataforma");
        
         if (!lockPlayer)
             {
@@ -60,7 +60,7 @@ public class LockPlayerToPlat : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player salió de la plataforma");
+            //Debug.log("Player salió de la plataforma");
            // collision.transform.SetParent(null);
            // collision.transform.localScale = Vector3.one;
             lockPlayer = false;

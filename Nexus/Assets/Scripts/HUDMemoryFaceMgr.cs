@@ -23,7 +23,7 @@ public class HUDMemoryFaceMgr : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"¡Ojo! El elemento {i} en FaceDataSO del HUD no es un SO de tipo 'FaceData'.");
+                //Debug.logError($"¡Ojo! El elemento {i} en FaceDataSO del HUD no es un SO de tipo 'FaceData'.");
             }
         }
         if (preCastedFaceData != null && preCastedFaceData.Length > 0 && currentHUDFace != null)
@@ -59,11 +59,11 @@ public class HUDMemoryFaceMgr : MonoBehaviour
         }
         else if (preCastedFaceData == null || preCastedFaceData.Length == 0)
         {
-            Debug.LogError("El array FaceData del HUD está vacío o no se ha inicializado correctamente.");
+            //Debug.logError("El array FaceData del HUD está vacío o no se ha inicializado correctamente.");
         }
         else
         {
-            Debug.LogWarning("No hay más caras de memoria para mostrar en el HUD.");
+            //Debug.logWarning("No hay más caras de memoria para mostrar en el HUD.");
         }
 
     }

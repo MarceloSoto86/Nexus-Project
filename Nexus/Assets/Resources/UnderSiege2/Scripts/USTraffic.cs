@@ -39,7 +39,7 @@ namespace ILranch
             }
             else
             {
-                Debug.Log(" <color=yellow> No spawn points! </color>");
+                //Debug.log(" <color=yellow> No spawn points! </color>");
                 locked = true;
                 return;
             }
@@ -71,7 +71,7 @@ namespace ILranch
         // Update is called once per frame
         void Update()
         {
-            //Debug.Log(VehicleCount);
+            ////Debug.log(VehicleCount);
         }
 
         IEnumerator SpawnInterval(float rTime)
@@ -96,7 +96,7 @@ namespace ILranch
                         }
                         else
                         {
-                            Debug.Log(" <color=yellow> Wrong vehicle! 'USEnemyShip' script is required </color>");
+                            //Debug.log(" <color=yellow> Wrong vehicle! 'USEnemyShip' script is required </color>");
                             locked = true;
                             break;
                         }

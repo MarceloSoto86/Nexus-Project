@@ -23,7 +23,7 @@ public class DashSkillUnlockTrigger : MonoBehaviour
             if (playerController != null)
             {
                 playerController.isDashUnlocked = true;
-                Debug.Log("<color=cyan>[NEXUS SYSTEM]: Habilidad Dash Activada de forma permanente.</color>");
+                //Debug.log("<color=cyan>[NEXUS SYSTEM]: Habilidad Dash Activada de forma permanente.</color>");
             }
 
             if (playerController.dashHUDIcon != null)

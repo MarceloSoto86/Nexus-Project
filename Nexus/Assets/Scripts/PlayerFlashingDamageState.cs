@@ -8,7 +8,7 @@ public class PlayerFlashingDamageState : PlayerBaseState
 
     public override void EnterState(PlayerController player)
     {
-            Debug.Log("Player está en Flashing Damage State");
+            //Debug.log("Player está en Flashing Damage State");
         player.animator.CrossFade("Getting_damage", 0.1f);
         player.rb.linearVelocity = new Vector3(0f, player.rb.linearVelocity.y, 0f); // Detener el movimiento horizontal
         _startTime = Time.time;

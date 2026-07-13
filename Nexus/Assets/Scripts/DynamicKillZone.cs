@@ -13,7 +13,7 @@ public class DynamicKillZone : MonoBehaviour
        {
            if (DifficultyManager.Instance == null) // Verifica si el DifficultyManager está disponible antes de intentar acceder a él
            {
-               Debug.LogWarning("DifficultyManager no encontrado. Asegúrate de que el DifficultyManager esté presente en la escena.");
+               //Debug.logWarning("DifficultyManager no encontrado. Asegúrate de que el DifficultyManager esté presente en la escena.");
                return; // Sale del método si el DifficultyManager no está disponible para evitar errores
            }
            float step = DifficultyManager.Instance.GetStepHeight(); // Obtiene la altura del paso desde el DifficultyManager
