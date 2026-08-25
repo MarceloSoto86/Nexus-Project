@@ -8,6 +8,7 @@ Nexus-Special-Project
 !Game Engine: [Unity]
 !Programming Language: C#
 !Build Platform: Windows
+!Itch.io Link: https://siddhartha86.itch.io/nexus
 ---
 
 ## 🎮 Game Overview
