@@ -12,7 +12,7 @@ Nexus-Special-Project
 ---
 
 ## 🎮 Game Overview
-**Nexus** is a 2.5D vertical platformer set in an opressive cyberpunk-noir universe. Players control the *Supervisor*, an operative navigating toxic flooded structures while suffering from severe amnesia and mental fragmentation. To reach the top of the facility and escape, players must manage their jump/dash mechanics while collecting memory serums that stabilize both their energy and their visual perception of identity.
+**Nexus** is a 3D vertical platformer set in an opressive cyberpunk-noir universe. Players control the *Supervisor*, an operative navigating toxic flooded structures while suffering from severe amnesia and mental fragmentation. To reach the top of the facility and escape, players must manage their jump/dash mechanics while collecting memory serums that stabilize both their energy and their visual perception of identity.
 
 * **Genre:** 3D Vertical Precision Platformer / Cyberpunk Noir
 * **Target Platform:** PC (Keyboard)
