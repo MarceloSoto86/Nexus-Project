@@ -17,6 +17,7 @@ Nexus-Special-Project
 * **Genre:** 3D Vertical Precision Platformer / Cyberpunk Noir
 * **Target Platform:** PC (Keyboard)
 * **Current Status:** Functional MVP (Minimum Viable Product) featuring complete game loop, persistence, and reactive UI system.
+* **Role:** Solo Developer — Game Design, Programming, Level Design, UI, VFX, Audio & Technical Implementation
 
 ---
 
